@@ -1,0 +1,24 @@
+# permissions for end users to edit defenders.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: defender-editor-role
+rules:
+- apiGroups:
+  - pcc.paloaltonetworks.com
+  resources:
+  - defenders
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - pcc.paloaltonetworks.com
+  resources:
+  - defenders/status
+  verbs:
+  - get

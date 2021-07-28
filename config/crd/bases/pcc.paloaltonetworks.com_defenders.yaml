@@ -1,0 +1,84 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: defenders.pcc.paloaltonetworks.com
+spec:
+  group: pcc.paloaltonetworks.com
+  names:
+    kind: Defender
+    listKind: DefenderList
+    plural: defenders
+    singular: defender
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              namespace:
+                type: string
+              orchestrator:
+                type: string
+                pattern: '^(?:kubernetes|openshift)$'
+              toolBundleUrl:
+                type: string
+              version:
+                type: string
+                pattern: '^\d{2}_\d{2}_\d{1,5}$'
+              credentials:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  password:
+                    type: string
+              defenderConfig:
+                type: object
+                properties:
+                  clusterAddress:
+                    type: string
+                  collectPodLabels:
+                    type: boolean
+                    default: false
+                  consoleAddress:
+                    type: string
+                  docker:
+                    type: boolean
+                    default: true
+                  dockerSocketPath:
+                    type: string
+                  imagePullSecret:
+                    type: string
+                  imageName:
+                    type: string
+                  monitorIstio:
+                    type: boolean
+                    default: false
+                  monitorServiceAccounts:
+                    type: boolean
+                    default: true
+                  nodeLabels:
+                    type: string
+                  privileged:
+                    type: boolean
+                    default: false
+                  project:
+                    type: string
+                  proxyAddress:
+                    type: string
+                  proxyCa:
+                    type: string
+                  proxyPassword:
+                    type: string
+                  proxyUsername:
+                    type: string
+                  selinuxEnabled:
+                    type: boolean
+                    default: false

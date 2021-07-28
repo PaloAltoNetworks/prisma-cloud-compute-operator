@@ -1,0 +1,102 @@
+---
+- name: Set working directory
+  set_fact:
+    work_dir: /opt/ansible/twistlock
+
+- name: Create Twistlock tools directory
+  file:
+    path: "{{ work_dir }}/tools"
+    state: directory
+    mode: 0700
+  register: tools_dir
+
+- name: Extract twistcli-linux.zip to tools directory
+  unarchive:
+    src: "{{ toolBundleUrl if toolBundleUrl is defined else 'https://storage.googleapis.com/twistlock-cdn/isolated_upgrades/v' + version + '/v' + version + '_isolated_update.tar.gz' }}"
+    dest: "{{ tools_dir.path }}"
+    remote_src: true
+
+- name: Create Console YAML file
+  command: >
+    linux/twistcli console export {{ orchestrator }}
+    {{ ('--image-pull-secrets ' + consoleConfig.imagePullSecret) if consoleConfig.imagePullSecret is defined else '' }}
+    --image-name {{ consoleConfig.imageName if consoleConfig.imageName is defined else 'registry-auth.twistlock.com/tw_' + credentials.accessToken + '/twistlock/console:console_' + version }}
+    {{ ('--namespace ' + namespace) if namespace is defined else '' }}
+    {{ ('--node-labels ' + consoleConfig.nodeLabels) if consoleConfig.nodeLabels is defined else '' }}
+    {{ ('--persistent-volume-labels ' + consoleConfig.persistentVolumeLabels) if consoleConfig.persistentVolumeLabels is defined else '' }}
+    {{ ('--persistent-volume-storage ' + consoleConfig.persistentVolumeStorage) if consoleConfig.persistentVolumeStorage is defined else '' }}
+    {{ '--run-as-user' if consoleConfig.runAsUser else '' }}
+    {{ ('--service-type ' + consoleConfig.serviceType) if consoleConfig.serviceType is defined else '' }}
+    {{ ('--storage-class ' + consoleConfig.storageClass) if consoleConfig.storageClass is defined else '' }}
+    --output {{ work_dir }}
+  args:
+    chdir: "{{ tools_dir.path }}"
+
+- name: Create Console from YAML file
+  k8s:
+    src: "{{ work_dir }}/twistlock_console.yaml"
+
+- name: Wait for Console to start up
+  uri:
+    url: https://twistlock-console.{{ namespace }}:8083/api/v1/_ping
+    validate_certs: false
+    method: GET
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 5
+
+- name: Create first admin user
+  uri:
+    url: https://twistlock-console.{{ namespace }}:8083/api/v1/signup
+    validate_certs: false
+    method: POST
+    body_format: json
+    body: {
+      "username": "{{ credentials.username }}",
+      "password": "{{ credentials.password }}"
+    }
+    status_code: [200, 400]
+
+- name: Add license to Console
+  uri:
+    url: https://twistlock-console.{{ namespace }}:8083/api/v1/settings/license
+    validate_certs: false
+    url_username: "{{ credentials.username }}"
+    url_password: "{{ credentials.password }}"
+    force_basic_auth: true
+    method: POST
+    body_format: json
+    body: {
+      "key": "{{ credentials.license }}"
+    }
+
+- name: Create Defender YAML file
+  command: >
+    linux/twistcli defender export {{ orchestrator }}
+    --user {{ credentials.username }} --password {{ credentials.password }}
+    --address https://twistlock-console.{{ namespace }}:8083
+    --cluster-address twistlock-console
+    {{ '--collect-pod-labels' if defenderConfig.collectPodLabels else '' }}
+    {{ '--cri' if not defenderConfig.docker else '' }}
+    {{ ('--docker-socket-path ' + defenderConfig.dockerSocketPath) if defenderConfig.dockerSocketPath is defined else '' }}
+    {{ ('--image-pull-secrets ' + defenderConfig.imagePullSecret) if defenderConfig.imagePullSecret is defined else '' }}
+    {{ ('--image-name ' + defenderConfig.imageName) if defenderConfig.imageName is defined else '' }}
+    {{ '--monitor-istio' if defenderConfig.monitorIstio else '' }}
+    {{ '--monitor-service-accounts' if defenderConfig.monitorServiceAccounts else '' }}
+    {{ ('--namespace ' + namespace) if namespace is defined else '' }}
+    {{ ('--nodeSelector ' + defenderConfig.nodeLabels) if defenderConfig.nodeLabels is defined else '' }}
+    {{ '--privileged' if defenderConfig.privileged else '' }}
+    {{ ('--project ' + defenderConfig.project) if defenderConfig.project is defined else '' }}
+    {{ ('--proxy-address ' + defenderConfig.proxyAddress) if defenderConfig.proxyAddress is defined else '' }}
+    {{ ('--proxy-ca ' + defenderConfig.proxyCa) if defenderConfig.proxyCa is defined else '' }}
+    {{ ('--proxy-password ' + defenderConfig.proxyPassword) if defenderConfig.proxyPassword is defined else '' }}
+    {{ ('--proxy-user ' + defenderConfig.proxyUsername) if defenderConfig.proxyUsername is defined else '' }}
+    {{ '--selinux-enabled' if defenderConfig.selinuxEnabled else '' }}
+    --output {{ work_dir }}/twistlock_defender.yaml
+  args:
+    chdir: "{{ tools_dir.path }}"
+
+- name: Create Defender from YAML file
+  k8s:
+    src: "{{ work_dir }}/twistlock_defender.yaml"

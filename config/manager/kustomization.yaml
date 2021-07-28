@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- manager.yaml
+
+images:
+- digest: sha256:13a8d407bb25bd398df728d57dd1656172ce95ab6161249ef37de0cc4421c2e6
+  name: controller
+  newName: quay.io/prismacloud/pcc-operator
+- digest: sha256:f85766573467db25a9e12ee1f75a8315b15a775c76da55e84a36602bca5a1d33
+  name: kube-rbac-proxy
+  newName: registry.redhat.io/openshift4/ose-kube-rbac-proxy

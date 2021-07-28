@@ -1,0 +1,24 @@
+# permissions for end users to edit consoledefenders.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: consoledefender-editor-role
+rules:
+- apiGroups:
+  - pcc.paloaltonetworks.com
+  resources:
+  - consoledefenders
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - pcc.paloaltonetworks.com
+  resources:
+  - consoledefenders/status
+  verbs:
+  - get

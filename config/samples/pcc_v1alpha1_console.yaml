@@ -1,0 +1,16 @@
+apiVersion: pcc.paloaltonetworks.com/v1alpha1
+kind: Console
+metadata:
+  name: pcc-console
+  namespace: twistlock
+spec:
+  namespace: twistlock
+  orchestrator: openshift
+  version: "21_04_439"
+  credentials:
+    accessToken: access_token
+    license: license
+    username: admin
+    password: change_me_after_install
+  consoleConfig:
+    serviceType: ClusterIP

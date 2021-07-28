@@ -1,0 +1,26 @@
+---
+- version: v1alpha1
+  group: pcc.paloaltonetworks.com
+  kind: Console
+  role: console
+  manageStatus: false
+  snakeCaseParameters: false
+  watchDependentResources: false
+
+- version: v1alpha1
+  group: pcc.paloaltonetworks.com
+  kind: Defender
+  role: defender
+  manageStatus: false
+  snakeCaseParameters: false
+  watchDependentResources: false
+
+- version: v1alpha1
+  group: pcc.paloaltonetworks.com
+  kind: ConsoleDefender
+  role: consoledefender
+  manageStatus: false
+  snakeCaseParameters: false
+  watchDependentResources: false
+
+#+kubebuilder:scaffold:watch

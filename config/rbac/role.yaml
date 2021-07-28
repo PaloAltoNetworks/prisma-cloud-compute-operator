@@ -1,0 +1,78 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - namespaces
+      - persistentvolumeclaims
+      - secrets
+      - serviceaccounts
+      - services
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - daemonsets
+      - deployments
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterroles
+      - clusterrolebindings
+      - roles
+      - rolebindings
+    verbs:
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - security.openshift.io
+    resources:
+      - securitycontextconstraints
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - watch
+  ##
+  ## Rules for pcc.paloaltonetworks.com/v1alpha1, Kind: Console, Kind: ConsoleDefender, Kind: Defender
+  ##
+  - apiGroups:
+      - pcc.paloaltonetworks.com
+    resources:
+      - consoles
+      - consoles/status
+      - consoles/finalizers
+      - consoledefenders
+      - consoledefenders/status
+      - consoledefenders/finalizers
+      - defenders
+      - defenders/status
+      - defenders/finalizers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+
+#+kubebuilder:scaffold:rules

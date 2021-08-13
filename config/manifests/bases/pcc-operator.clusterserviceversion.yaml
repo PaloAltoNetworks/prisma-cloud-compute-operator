@@ -320,14 +320,7 @@ spec:
     - Support for offline deployments
 
     ## Installation
-    1. Click "Install."
-    2. Verify the following settings:
-        - Update channel = stable
-        - Installation mode = A specific namespace on the cluster
-        - Installed Namespace = twistlock (create it if necessary)
-    3. Once installed, create instance of Console and Defenders, Console, or Defenders, following the prompts.
-
-    See documentation [here](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/tree/main/docs) for resource field descriptions and details on offline deployment.
+    See documentation [here](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/tree/main/docs).
 
     ## Support
     This operator is available "as is," and should be seen as community-supported; however, Palo Alto Networks will continue contributing whenever possible.
@@ -356,6 +349,7 @@ spec:
   - supported: false
     type: AllNamespaces
   keywords:
+  - palo
   - palo alto
   - palo alto networks
   - paloalto
@@ -365,6 +359,9 @@ spec:
   - prisma cloud
   - prisma cloud compute
   - security
+  - image
+  - images
+  - container
   - containers
   - docker
   - podman
@@ -372,8 +369,11 @@ spec:
   - vulnerabilities
   - compliance
   - runtime
+  - scan
   - scanning
+  - monitor
   - monitoring
+  - alert
   - alerting
   links:
   - name: Prisma Cloud
@@ -384,9 +384,4 @@ spec:
   maturity: alpha
   provider:
     name: Palo Alto Networks
-  relatedImages:
-  - image: quay.io/prismacloud/pcc-operator@sha256:13a8d407bb25bd398df728d57dd1656172ce95ab6161249ef37de0cc4421c2e6
-    name: pcc-operator
-  - image: registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:f85766573467db25a9e12ee1f75a8315b15a775c76da55e84a36602bca5a1d33
-    name: kube-rbac-proxy
   version: 0.0.0

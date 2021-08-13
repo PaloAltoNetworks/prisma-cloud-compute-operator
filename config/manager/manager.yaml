@@ -25,17 +25,6 @@ spec:
       securityContext:
         runAsNonRoot: true
       containers:
-      - name: kube-rbac-proxy
-        image: kube-rbac-proxy
-        imagePullPolicy: Always
-        args:
-        - "--secure-listen-address=0.0.0.0:8443"
-        - "--upstream=http://127.0.0.1:8080/"
-        - "--logtostderr=true"
-        - "--v=10"
-        ports:
-        - containerPort: 8443
-          name: https
       - name: manager
         image: controller
         imagePullPolicy: Always
@@ -43,8 +32,6 @@ spec:
         - name: ANSIBLE_GATHERING
           value: explicit
         args:
-        - "--health-probe-bind-address=:6789"
-        - "--metrics-bind-address=127.0.0.1:8080"
         - "--leader-elect"
         - "--leader-election-id=pcc-operator"
         securityContext:

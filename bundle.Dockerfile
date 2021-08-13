@@ -7,7 +7,7 @@ LABEL operators.operatorframework.io.bundle.metadata.v1=metadata/
 LABEL operators.operatorframework.io.bundle.package.v1=pcc-operator
 LABEL operators.operatorframework.io.bundle.channels.v1=stable
 LABEL operators.operatorframework.io.bundle.channel.default.v1=stable
-LABEL operators.operatorframework.io.metrics.builder=operator-sdk-v1.9.0
+LABEL operators.operatorframework.io.metrics.builder=operator-sdk-v1.11.0
 LABEL operators.operatorframework.io.metrics.mediatype.v1=metrics+v1
 LABEL operators.operatorframework.io.metrics.project_layout=ansible.sdk.operatorframework.io/v1
 
@@ -15,13 +15,7 @@ LABEL operators.operatorframework.io.metrics.project_layout=ansible.sdk.operator
 LABEL operators.operatorframework.io.test.mediatype.v1=scorecard+v1
 LABEL operators.operatorframework.io.test.config.v1=tests/scorecard/
 
-# Labels for OpenShift.
-# https://redhat-connect.gitbook.io/certified-operator-guide/ocp-deployment/operator-metadata/bundle-directory
-LABEL com.redhat.delivery.backport=true
-LABEL com.redhat.delivery.operator.bundle=true
-LABEL com.redhat.openshift.versions=v4.5-v4.7
-
 # Copy files to locations specified by labels.
-COPY bundle/manifests /manifests/
-COPY bundle/metadata /metadata/
-COPY bundle/tests/scorecard /tests/scorecard/
+COPY bundle-v0.0.1/manifests /manifests/
+COPY bundle-v0.0.1/metadata /metadata/
+COPY bundle-v0.0.1/tests/scorecard /tests/scorecard/

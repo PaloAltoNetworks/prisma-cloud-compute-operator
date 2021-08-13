@@ -5,7 +5,7 @@ metadata:
   namespace: twistlock
 spec:
   namespace: twistlock
-  orchestrator: openshift
+  orchestrator: kubernetes
   version: "21_04_439"
   credentials:
     accessToken: access_token

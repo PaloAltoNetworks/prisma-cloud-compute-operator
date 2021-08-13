@@ -20,7 +20,7 @@ On a host that has docker or podman installed and has connectivity to the Intern
         docker pull quay.io/prismacloud/pcc-operator-catalog:v0.0.1
         ```
     
-    - the [Console and Defender images](https://docs.prismacloudcompute.com/docs/compute_edition/install/twistlock_container_images.html) for the version you're trying to install
+    - the [Console and Defender images](https://docs.prismacloudcompute.com/docs/compute_edition/install/twistlock_container_images.html) for the version you are installing
         ```bash
         docker pull registry.twistlock.com/twistlock/console:console_21_04_439
         docker pull registry.twistlock.com/twistlock/defender:defender_21_04_439
@@ -110,7 +110,7 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
 8. Install Console and Defenders.
     - Go to **Installed Operators** > **Prisma Cloud Compute Operator** > **Details**
     - Click **Create instance** in the `Console and Defender` provided API
-    - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html). The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
+    - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching your version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
     - In the `Credentials` section: 
         - **Access Token**: 32-character (lower case) access token included in the license bundle
@@ -146,7 +146,7 @@ The upgrade process will retain the existing deployment's configuration and sett
 ### Console Upgrade
 - Go to **Installed Operators** > **Prisma Cloud Compute Operator** > **Details**
     - Click **Create instance** in the `Console` provided API
-    - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html). The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
+    - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching your version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
     - In the `Credentials` section: 
         - **Access Token**: <`clear this value`>
@@ -162,7 +162,7 @@ The upgrade process will retain the existing deployment's configuration and sett
 Once the upgraded Console has been deployed upgrade the Defenders.
 - Go to **Installed Operators** > **Prisma Cloud Compute Operator** > **Details**
     - Click **Create instance** in the `Defender` provided API
-    - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html). The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
+    - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching your version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.   
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
     - In the `Credentials` section: 
         - **Password**: password to an account that has defender-manager or higher role

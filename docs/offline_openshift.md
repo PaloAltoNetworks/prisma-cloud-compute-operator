@@ -1,6 +1,6 @@
 # OpenShift Offline Deployment
 
-This documentation demonstrates the automated [deployment](#installation-process) and [upgrade](#upgrade-process) processes for the Prisma Cloud Compute Console and Defenders within an isolated OpenShift Container Platform 4.7 using the [Operators for isolated environments guidance](https://cloud.redhat.com/blog/is-your-operator-air-gap-friendly?extIdCarryOver=true&sc_cid=701600000006NHXAA2).
+This documentation demonstrates the automated [installation](#installation-process) and [upgrade](#upgrade-process) processes for the Prisma Cloud Compute Console and Defenders within an isolated OpenShift Container Platform 4.7 using the [Operators for isolated environments guidance](https://cloud.redhat.com/blog/is-your-operator-air-gap-friendly?extIdCarryOver=true&sc_cid=701600000006NHXAA2).
 
 In this example we utilize the OCP built-in image registry for the storage of the Console, Defender and Operator images.
 For access to the built-in registry from outside the cluster, we set the `defaultRoute` parameter of the `configs.imageregistry.operator.openshift.io` resource to `true`.
@@ -165,8 +165,8 @@ Once the upgraded Console has been deployed upgrade the Defenders.
     - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html). The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
     - In the `Credentials` section: 
-        - **Password**: password to an account that has defender-manager or high role
-        - **Username**: username to an account that has defender-manager or high role
+        - **Password**: password to an account that has defender-manager or higher role
+        - **Username**: username to an account that has defender-manager or higher role
     - In the `Defender Installation Options` section:
         - **Cluster Address**: `twistlock-console` name of the Console's service
         - **Console Address**: `https://twistlock-console:8083` Console's service API endpoint

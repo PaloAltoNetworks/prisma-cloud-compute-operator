@@ -133,22 +133,6 @@ KUSTOMIZE = $(shell which kustomize)
 endif
 endif
 
-.PHONY: ansible-operator
-ANSIBLE_OPERATOR = $(shell pwd)/bin/ansible-operator
-ansible-operator: ## Download ansible-operator locally if necessary, preferring the $(pwd)/bin path over global if both exist.
-ifeq (,$(wildcard $(ANSIBLE_OPERATOR)))
-ifeq (,$(shell which ansible-operator 2>/dev/null))
-	@{ \
-	set -e ;\
-	mkdir -p $(dir $(ANSIBLE_OPERATOR)) ;\
-	curl -sSLo $(ANSIBLE_OPERATOR) https://github.com/operator-framework/operator-sdk/releases/download/v1.8.1/ansible-operator_$(OS)_$(ARCH) ;\
-	chmod +x $(ANSIBLE_OPERATOR) ;\
-	}
-else
-ANSIBLE_OPERATOR = $(shell which ansible-operator)
-endif
-endif
-
 .PHONY: opm
 OPM = ./bin/opm
 opm: ## Download opm locally if necessary.

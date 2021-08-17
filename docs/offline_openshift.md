@@ -167,6 +167,7 @@ The upgrade process will retain the existing deployment's configuration and sett
 ### Console Upgrade
 - Within the `twistlock` Project go to **Installed Operators** > **Prisma Cloud Compute Operator** > **Details**
     - Click **Create instance** in the `Console` provided API
+    - In the `Orchestrator` field enter `openshift`
     - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
     - If you are not using Kubernetes Secrets set the following in the `Credentials` section: 

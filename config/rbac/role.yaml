@@ -38,6 +38,8 @@ rules:
       - roles
       - rolebindings
     verbs:
+      - create
+      - get
       - list
       - patch
       - watch

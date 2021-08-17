@@ -1,5 +1,5 @@
 # VERSION defines the project version for the bundle.
-VERSION ?= 0.0.1
+VERSION ?= 0.1.0
 
 # CHANNELS define the bundle channels used in the bundle.
 ifdef CHANNELS
@@ -66,15 +66,15 @@ undeploy: ## Remove from cluster specified in ~/.kube/config
 BUNDLE_IMG ?= $(OPERATOR_IMAGE_BASE)-bundle:v$(VERSION)
 
 .PHONY: manifests
-manifests: kustomize operator-build ## Generate manifests and update image reference
+manifests: kustomize operator-build operator-push ## Generate manifests and update image reference
 	operator-sdk generate kustomize manifests -q
 	repo_digest=$$(docker inspect --format '{{ .RepoDigests }}' $(OPERATOR_IMG) | grep -Eo 'quay.io/prismacloud/pcc-operator@sha256:\w{64}') \
 	&& cd config/manager && $(KUSTOMIZE) edit set image controller="$$repo_digest"
 
 .PHONY: bundle
 bundle: manifests ## Generate bundle then validate generated files
-	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle --output-dir bundle-v$(VERSION) --version $(VERSION) $(BUNDLE_METADATA_OPTS)
-	operator-sdk bundle validate bundle-v$(VERSION)
+	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle --version $(VERSION) $(BUNDLE_METADATA_OPTS)
+	operator-sdk bundle validate bundle
 
 .PHONY: bundle-build
 bundle-build: ## Build bundle image

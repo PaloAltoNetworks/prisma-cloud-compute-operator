@@ -3,9 +3,9 @@ kind: ClusterServiceVersion
 metadata:
   annotations:
     alm-examples: '[]'
-    capabilities: Basic Install
+    capabilities: Seamless Upgrades
     categories: Security
-    containerImage: quay.io/prismacloud/pcc-operator@sha256:13a8d407bb25bd398df728d57dd1656172ce95ab6161249ef37de0cc4421c2e6
+    containerImage: quay.io/prismacloud/pcc-operator
     createdAt: "2021-07-30"
     description: Deploy Prisma Cloud Compute for cloud-native security in your clusters
     olm.properties: '[{"type": "olm.maxOpenShiftVersion", "value": "4.7"}]'
@@ -324,9 +324,11 @@ spec:
         - Add license
     - Deploy Defenders
     - Support for offline deployments
+    - Upgrade Console
+    - Upgrade Defenders
 
     ## Installation
-    See documentation [here](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/tree/main/docs).
+    See the [Prisma Cloud Compute Operator documentation](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/tree/main/docs) for installation guides.
 
     ## Support
     This operator is available "as is," and should be seen as community-supported; however, Palo Alto Networks will continue contributing whenever possible.

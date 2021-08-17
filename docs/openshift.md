@@ -72,11 +72,11 @@ The upgrade process will retain the existing deployment's configuration and sett
     - Click **Create instance** in the `Console` provided API
     - In the `Tool Bundle URL` field specify the path to the [update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching the version to be deployed. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
-    - In the `Credentials` section: 
-        - **Access Token**: <`clear this value`>
-        - **License**: <`clear this value`>
-        - **Password**: <`clear this value`>
-        - **Username**: <`clear this value`>
+    - If you are not using Kubernetes Secrets set the following in the `Credentials` section: 
+        - **Access Token**: `license access token`
+        - **License**: `license key`
+        - **Password**: `admin account password`
+        - **Username**: `admin account username`
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     - Click `Create`
 

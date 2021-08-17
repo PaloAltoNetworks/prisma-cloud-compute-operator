@@ -1,0 +1,7 @@
+---
+access_token: "{{ lookup('env', 'PCC_ACCESS_TOKEN') | default(credentials.accessToken) }}"
+license: "{{ lookup('env', 'PCC_LICENSE') | default(credentials.license) }}"
+password: "{{ lookup('env', 'PCC_PASSWORD') | default(credentials.password) }}"
+username: "{{ lookup('env', 'PCC_USERNAME') | default(credentials.username) }}"
+
+work_dir: /opt/ansible/twistlock

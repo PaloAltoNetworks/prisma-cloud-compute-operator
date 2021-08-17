@@ -41,6 +41,7 @@ This documentation demonstrates the automated [installation](#installation-proce
     - In the `Tool Bundle URL` field specify the path to the [update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching the version to be deployed. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
     - If you are not using Kubernetes Secrets set the following in the `Credentials` section: 
+
         - **Access Token**: 32-character access token included in the license bundle
         - **License**: Product license included in the license bundle
         - **Password**: Password to be used for the initial local administrator user. It is highly recommended that you change the password for this user in the Prisma Cloud Compute Console after install.

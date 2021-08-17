@@ -31,6 +31,30 @@ spec:
         env:
         - name: ANSIBLE_GATHERING
           value: explicit
+        - name: PCC_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pcc-credentials
+              key: accessToken
+              optional: true
+        - name: PCC_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: pcc-credentials
+              key: license
+              optional: true
+        - name: PCC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pcc-credentials
+              key: password
+              optional: true
+        - name: PCC_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: pcc-credentials
+              key: username
+              optional: true
         args:
         - "--leader-elect"
         - "--leader-election-id=pcc-operator"

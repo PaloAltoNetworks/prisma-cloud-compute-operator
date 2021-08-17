@@ -18,22 +18,19 @@ This should be the same namespace as the operator itself.
 Default is twistlock.
 - **orchestrator** (string), required  
 Orchestrator being used. Must be kubernetes or openshift.
-Default is kubernetes.
 - **toolBundleUrl** (string), recommended  
 URL of the tool bundle containing twistcli, the tool used to generate Prisma Cloud Compute YAML files.
 Can either be an [isolated upgrade](https://docs.twistlock.com/docs/government/isolated_upgrades/isolated_upgrades.html) tarball or a release tarball URL.
 - **version** (string), required  
 Version of Prisma Cloud Compute to install.
-Default is 21_04_439.
 - **credentials** (PrismaCloudComputeCredentials)  
 Sensitive data to be used during installation.
-Secrets can be used instead if preferred.
+Be aware that these credentials will be visible in the custom resource spec.
+Only use this section if you cannot use secrets for whatever reason.
   - **credentials.accessToken** (string), required  
   32-character lowercase access token included in the license bundle.
-  Default is access_token.
   - **credentials.license** (string), required  
   Product license included in the license bundle.
-  Default is license.
   - **credentials.password** (string), required  
   Password to be used for the initial local administrator user.
   It is highly recommended that you change the password for this user in the Prisma Cloud Compute Console after install.
@@ -59,7 +56,7 @@ They are ultimately passed to `twistcli` for YAML generation.
   Default is 100Gi.
   - **consoleConfig.runAsUser** (string)  
   Run Console as UID 2674 (requires manual pre-configuration of ownership and permissions of the PV).
-  Must be "true" or "false" (quoted).
+  Must be true or false.
   - **consoleConfig.serviceType** (string)  
   Service type for exposing Console. Supported values are ClusterIP, NodePort, and LoadBalancer.
   Default is ClusterIP.
@@ -74,7 +71,7 @@ They are ultimately passed to `twistcli` for YAML generation.
   Host name used by Defender to verify Console certificate.
   Must be one of the SANs listed at Manage > Defenders > Names.
   - **defenderConfig.collectPodLabels** (string)  
-  Must be "true" or "false" (quoted).
+  Must be true or false.
   - **defenderConfig.consoleAddress** (string)  
   URL of the Console.
   - **defenderConfig.docker** (string)  
@@ -89,14 +86,14 @@ They are ultimately passed to `twistcli` for YAML generation.
   Defender image to deploy.
   If no value is specified, the image is pulled from the Prisma Cloud Compute registry.
   - **defenderConfig.monitorIstio** (string)  
-  Must be "true" or "false" (quoted).
+  Must be true or false.
   - **defenderConfig.monitorServiceAccounts** (string)  
-  Must be "true" or "false" (quoted).
+  Must be true or false.
   - **defenderConfig.nodeLabels** (string)  
   Label to use as a nodeSelector for Defenders. Specify a label and value (e.g. "kubernetes.io/hostname=node-name").
   - **defenderConfig.privileged** (string)  
   Run Defender in privileged mode.
-  Must be "true" or "false" (quoted).
+  Must be true or false.
   - **defenderConfig.project** (string)  
   Project to which Defenders will connect.
   - **defenderConfig.proxyAddress** (string)  
@@ -110,4 +107,4 @@ They are ultimately passed to `twistcli` for YAML generation.
   Username for authenticating with the proxy.
   - **defenderConfig.selinuxEnabled** (string)  
   Use the spc_t SELinux type.
-  Must be "true" or "false" (quoted).
+  Must be true or false.

@@ -8,9 +8,7 @@ spec:
   namespace: twistlock
   orchestrator: kubernetes
   version: '21_04_439'
-  credentials:
-    username: defender_manager_user
-    password: defender_manager_password
   defenderConfig:
     clusterAddress: twistlock-console.example.com
     consoleAddress: https://twistlock-console.example.com:8083
+    docker: false

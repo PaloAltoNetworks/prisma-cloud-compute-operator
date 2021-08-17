@@ -1,8 +1,4 @@
 ---
-- name: Set working directory
-  set_fact:
-    work_dir: /opt/ansible/twistlock
-
 - name: Create Twistlock tools directory
   file:
     path: "{{ work_dir }}/tools"
@@ -20,7 +16,7 @@
   command: >
     linux/twistcli console export {{ orchestrator }}
     {{ ('--image-pull-secrets ' + consoleConfig.imagePullSecret) if consoleConfig.imagePullSecret is defined else '' }}
-    --image-name {{ consoleConfig.imageName if consoleConfig.imageName is defined else 'registry-auth.twistlock.com/tw_' + credentials.accessToken + '/twistlock/console:console_' + version }}
+    --image-name {{ consoleConfig.imageName if consoleConfig.imageName is defined else 'registry-auth.twistlock.com/tw_' + access_token + '/twistlock/console:console_' + version }}
     {{ ('--namespace ' + namespace) if namespace is defined else '' }}
     {{ ('--node-labels ' + consoleConfig.nodeLabels) if consoleConfig.nodeLabels is defined else '' }}
     {{ ('--persistent-volume-labels ' + consoleConfig.persistentVolumeLabels) if consoleConfig.persistentVolumeLabels is defined else '' }}
@@ -53,8 +49,8 @@
     method: POST
     body_format: json
     body: {
-      "username": "{{ credentials.username }}",
-      "password": "{{ credentials.password }}"
+      "username": "{{ username }}",
+      "password": "{{ password }}"
     }
     status_code: [200, 400]
 
@@ -62,11 +58,11 @@
   uri:
     url: https://twistlock-console.{{ namespace }}:8083/api/v1/settings/license
     validate_certs: false
-    url_username: "{{ credentials.username }}"
-    url_password: "{{ credentials.password }}"
+    url_username: "{{ username }}"
+    url_password: "{{ password }}"
     force_basic_auth: true
     method: POST
     body_format: json
     body: {
-      "key": "{{ credentials.license }}"
+      "key": "{{ license }}"
     }

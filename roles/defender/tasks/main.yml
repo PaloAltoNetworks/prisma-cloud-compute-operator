@@ -1,8 +1,4 @@
 ---
-- name: Set working directory
-  set_fact:
-    work_dir: /opt/ansible/twistlock
-
 - name: Create Twistlock tools directory
   file:
     path: "{{ work_dir }}/tools"
@@ -19,7 +15,7 @@
 - name: Create Defender YAML file
   command: >
     linux/twistcli defender export {{ orchestrator }}
-    --user {{ credentials.username }} --password {{ credentials.password }}
+    --user {{ username }} --password {{ password }}
     --address {{ defenderConfig.consoleAddress }}
     --cluster-address {{ defenderConfig.clusterAddress }}
     {{ '--collect-pod-labels' if defenderConfig.collectPodLabels else '' }}

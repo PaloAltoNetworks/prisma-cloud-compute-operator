@@ -10,7 +10,7 @@ metadata:
     description: Deploy Prisma Cloud Compute for cloud-native security in your clusters
     olm.properties: '[{"type": "olm.maxOpenShiftVersion", "value": "4.7"}]'
     operators.openshift.io/infrastructure-features: '["Disconnected"]'
-    operators.operatorframework.io/builder: operator-sdk-v1.9.0
+    operators.operatorframework.io/builder: operator-sdk-v1.11.0
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
     repository: https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator
     support: pcc-integrations@paloaltonetworks.com
@@ -26,24 +26,26 @@ spec:
       name: consoledefenders.pcc.paloaltonetworks.com
       specDescriptors:
       - description: Namespace in which the Console and Defenders will be deployed.
-          This should be the same namespace as the operator itself.
+          This should be the same namespace as the operator itself. Default is twistlock.
         displayName: Namespace
         path: namespace
       - description: Orchestrator being used. Must be "kubernetes" or "openshift".
         displayName: Orchestrator
         path: orchestrator
       - description: URL of the tool bundle containing twistcli, the tool used to
-          generate Prisma Cloud Compute YAML files.
+          generate Prisma Cloud Compute YAML files. Can either be an [isolated upgrade](https://docs.twistlock.com/docs/government/isolated_upgrades/isolated_upgrades.html)
+          tarball or a release tarball URL.
         displayName: Tool Bundle URL
         path: toolBundleUrl
       - description: Version of Prisma Cloud Compute to install.
         displayName: Version
         path: version
-      - description: Be aware that these credentials will be visible in the custom
-          resource spec.
+      - description: Sensitive data to be used during installation. Be aware that
+          these credentials will be visible in the custom resource spec. Secrets can
+          be used instead if preferred.
         displayName: Credentials
         path: credentials
-      - description: 32-character access token included in the license bundle.
+      - description: 32-character lowercase access token included in the license bundle.
         displayName: Access Token
         path: credentials.accessToken
       - description: Product license included in the license bundle.
@@ -151,25 +153,27 @@ spec:
       kind: Console
       name: consoles.pcc.paloaltonetworks.com
       specDescriptors:
-      - description: Namespace in which the Defenders will be deployed. This should
-          be the same namespace as the operator itself.
+      - description: Namespace in which the Console and Defenders will be deployed.
+          This should be the same namespace as the operator itself. Default is twistlock.
         displayName: Namespace
         path: namespace
       - description: Orchestrator being used. Must be "kubernetes" or "openshift".
         displayName: Orchestrator
         path: orchestrator
       - description: URL of the tool bundle containing twistcli, the tool used to
-          generate Prisma Cloud Compute YAML files.
+          generate Prisma Cloud Compute YAML files. Can either be an [isolated upgrade](https://docs.twistlock.com/docs/government/isolated_upgrades/isolated_upgrades.html)
+          tarball or a release tarball URL.
         displayName: Tool Bundle URL
         path: toolBundleUrl
       - description: Version of Prisma Cloud Compute to install.
         displayName: Version
         path: version
-      - description: Be aware that these credentials will be visible in the custom
-          resource spec.
+      - description: Sensitive data to be used during installation. Be aware that
+          these credentials will be visible in the custom resource spec. Secrets can
+          be used instead if preferred.
         displayName: Credentials
         path: credentials
-      - description: 32-character access token included in the license bundle.
+      - description: 32-character lowercase access token included in the license bundle.
         displayName: Access Token
         path: credentials.accessToken
       - description: Product license included in the license bundle.
@@ -224,22 +228,24 @@ spec:
       kind: Defender
       name: defenders.pcc.paloaltonetworks.com
       specDescriptors:
-      - description: Namespace in which the Defenders will be deployed. This should
-          be the same namespace as the operator itself.
+      - description: Namespace in which the Console and Defenders will be deployed.
+          This should be the same namespace as the operator itself. Default is twistlock.
         displayName: Namespace
         path: namespace
       - description: Orchestrator being used. Must be "kubernetes" or "openshift".
         displayName: Orchestrator
         path: orchestrator
       - description: URL of the tool bundle containing twistcli, the tool used to
-          generate Prisma Cloud Compute YAML files.
+          generate Prisma Cloud Compute YAML files. Can either be an [isolated upgrade](https://docs.twistlock.com/docs/government/isolated_upgrades/isolated_upgrades.html)
+          tarball or a release tarball URL.
         displayName: Tool Bundle URL
         path: toolBundleUrl
       - description: Version of Prisma Cloud Compute to install.
         displayName: Version
         path: version
-      - description: Be aware that these credentials will be visible in the custom
-          resource spec.
+      - description: Sensitive data to be used during installation. Be aware that
+          these credentials will be visible in the custom resource spec. Secrets can
+          be used instead if preferred.
         displayName: Credentials
         path: credentials
       - description: Password of a Prisma Cloud Compute user with the ability to install

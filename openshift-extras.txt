@@ -1,8 +1,18 @@
 # Bundle annotations since they get overwritten every `make bundle`.
 # Copy the three annotations and comments below into the bundle/metadata/annotations.yaml file.
-annotations:
+
   # Annotations for OpenShift.
   # https://redhat-connect.gitbook.io/certified-operator-guide/ocp-deployment/operator-metadata/bundle-directory
   com.redhat.delivery.backport: true
   com.redhat.delivery.operator.bundle: true
   com.redhat.openshift.versions: v4.5-v4.7
+
+
+# Bundle Dockerfile LABELs also get overwritten.
+# Copy the three LABELs and comments below into the bundle.Dockerfile file.
+
+# Labels for OpenShift.
+# https://redhat-connect.gitbook.io/certified-operator-guide/ocp-deployment/operator-metadata/bundle-directory
+LABEL com.redhat.delivery.backport=true
+LABEL com.redhat.delivery.operator.bundle=true
+LABEL com.redhat.openshift.versions=v4.5-v4.7

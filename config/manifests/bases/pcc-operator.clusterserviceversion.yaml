@@ -328,7 +328,7 @@ spec:
     - Upgrade Defenders
 
     ## Installation
-    See the [Prisma Cloud Compute Operator documentation](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/tree/main/docs) for installation guides.
+    See the [Prisma Cloud Compute Operator documentation](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator) for installation guides.
 
     ## Support
     This operator is available "as is," and should be seen as community-supported; however, Palo Alto Networks will continue contributing whenever possible.

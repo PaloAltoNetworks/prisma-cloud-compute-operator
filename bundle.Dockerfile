@@ -15,6 +15,12 @@ LABEL operators.operatorframework.io.metrics.project_layout=ansible.sdk.operator
 LABEL operators.operatorframework.io.test.mediatype.v1=scorecard+v1
 LABEL operators.operatorframework.io.test.config.v1=tests/scorecard/
 
+# Labels for OpenShift.
+# https://redhat-connect.gitbook.io/certified-operator-guide/ocp-deployment/operator-metadata/bundle-directory
+LABEL com.redhat.delivery.backport=true
+LABEL com.redhat.delivery.operator.bundle=true
+LABEL com.redhat.openshift.versions=v4.5-v4.7
+
 # Copy files to locations specified by labels.
 COPY bundle/manifests /manifests/
 COPY bundle/metadata /metadata/

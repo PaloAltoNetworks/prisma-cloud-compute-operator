@@ -5,12 +5,6 @@ metadata:
   namespace: twistlock
 spec:
   namespace: twistlock
-  orchestrator: kubernetes
   version: "21_04_439"
-  credentials:
-    accessToken: access_token
-    license: license
-    username: admin
-    password: change_me_after_install
   consoleConfig:
     serviceType: ClusterIP

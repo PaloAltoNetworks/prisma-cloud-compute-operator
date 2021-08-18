@@ -15,14 +15,7 @@ metadata:
             "consoleConfig": {
               "serviceType": "ClusterIP"
             },
-            "credentials": {
-              "accessToken": "access_token",
-              "license": "license",
-              "password": "change_me_after_install",
-              "username": "admin"
-            },
             "namespace": "twistlock",
-            "orchestrator": "kubernetes",
             "version": "21_04_439"
           }
         },
@@ -37,14 +30,10 @@ metadata:
             "consoleConfig": {
               "serviceType": "ClusterIP"
             },
-            "credentials": {
-              "accessToken": "access_token",
-              "license": "license",
-              "password": "change_me_after_install",
-              "username": "admin"
+            "defenderConfig": {
+              "docker": false
             },
             "namespace": "twistlock",
-            "orchestrator": "kubernetes",
             "version": "21_04_439"
           }
         },
@@ -56,16 +45,12 @@ metadata:
             "namespace": "twistlock"
           },
           "spec": {
-            "credentials": {
-              "password": "defender_manager_password",
-              "username": "defender_manager_user"
-            },
             "defenderConfig": {
               "clusterAddress": "twistlock-console.example.com",
-              "consoleAddress": "https://twistlock-console.example.com:8083"
+              "consoleAddress": "https://twistlock-console.example.com:8083",
+              "docker": false
             },
             "namespace": "twistlock",
-            "orchestrator": "kubernetes",
             "version": "21_04_439"
           }
         }
@@ -395,7 +380,7 @@ spec:
     - Upgrade Defenders
 
     ## Installation
-    See the [Prisma Cloud Compute Operator documentation](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/tree/main/docs) for installation guides.
+    See the [Prisma Cloud Compute Operator documentation](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator) for installation guides.
 
     ## Support
     This operator is available "as is," and should be seen as community-supported; however, Palo Alto Networks will continue contributing whenever possible.
@@ -528,7 +513,7 @@ spec:
                       key: username
                       name: pcc-credentials
                       optional: true
-                image: quay.io/prismacloud/pcc-operator@sha256:dbaf047ad0902269372c4a03f2d46402aca2adef8d227df637f59bc848d3d4d9
+                image: quay.io/prismacloud/pcc-operator@sha256:610a4786628389c56ad1ba1bdd834489e790067fb1d3f59e399e603da6d051c1
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:

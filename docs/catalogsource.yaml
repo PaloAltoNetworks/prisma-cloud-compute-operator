@@ -6,7 +6,7 @@ metadata:
   namespace: openshift-marketplace
 spec:
   sourceType: grpc
-  image: image-registry.openshift-image-registry.svc.cluster.local:5000/openshift-marketplace/pcc-operator-catalog:v0.0.1
+  image: image-registry.openshift-image-registry.svc.cluster.local:5000/openshift-marketplace/pcc-operator-catalog:v0.1.0
   displayName: Prisma Cloud Compute Operator Catalog
   publisher: Palo Alto Networks
   updateStrategy:

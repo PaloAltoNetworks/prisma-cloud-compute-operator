@@ -1,6 +1,6 @@
 # OpenShift Offline Deployment
 
-This documentation demonstrates the automated [installation](#installation-process) and [upgrade](#upgrade-process) processes for the Prisma Cloud Compute Console and Defenders within an isolated OpenShift Container Platform 4.7 using the [Operators for isolated environments guidance](https://cloud.redhat.com/blog/is-your-operator-air-gap-friendly?extIdCarryOver=true&sc_cid=701600000006NHXAA2).
+This documentation demonstrates the automated [installation](#installation-process) and [upgrade](#upgrade-process) processes for the Prisma Cloud Compute Console and Defenders within an isolated OpenShift Container Platform 4.7 using the [Operators for isolated environments guidance](https://cloud.redhat.com/blog/is-your-operator-air-gap-friendly).
 
 In this example we utilize the OCP built-in image registry for the storage of the Console, Defender and Operator images.
 For access to the built-in registry from outside the cluster, we set the `defaultRoute` parameter of the `configs.imageregistry.operator.openshift.io` resource to `true`.
@@ -73,16 +73,16 @@ On a host that has docker or podman installed and has connectivity to the Intern
         apiVersion: operators.coreos.com/v1alpha1
         kind: CatalogSource
         metadata:
-        name: pcc-operator-catalog
-        namespace: openshift-marketplace
+          name: pcc-operator-catalog
+          namespace: openshift-marketplace
         spec:
-        sourceType: grpc
-        image: image-registry.openshift-image-registry.svc.cluster.local:5000/openshift-marketplace/pcc-operator-catalog
-        displayName: Prisma Cloud Compute Operator Catalog
-        publisher: Palo Alto Networks
-        updateStrategy:
+          displayName: Prisma Cloud Compute Operator Catalog
+          image: image-registry.openshift-image-registry.svc.cluster.local:5000/openshift-marketplace/pcc-operator-catalog:v0.1.0
+          publisher: Palo Alto Networks
+          sourceType: grpc
+          updateStrategy:
             registryPoll:
-            interval: 10m0s
+              interval: 10m0s
         ```
     - Apply the CatalogSource yaml to the cluster
         ```bash
@@ -95,13 +95,13 @@ On a host that has docker or podman installed and has connectivity to the Intern
         apiVersion: v1
         kind: Secret
         metadata:
-            name: pcc-credentials
-            namespace: twistlock
+          name: pcc-credentials
+          namespace: twistlock
         data:
-            accessToken: <base64 encoded access token>
-            license: <base64 encoded license key>
-            password: <base64 encoded password>
-            username: <base64 encoded username>
+          accessToken: <base64 encoded access token>
+          license: <base64 encoded license key>
+          password: <base64 encoded password>
+          username: <base64 encoded username>
         ```
     
     - Base64 encode your `accessToken`, `license`, `password` & `username` values and update the `pcc-credentials.yaml` file. For example: ```echo -n "admin" | base64``` output: ```YWRtaW4=``` 
@@ -119,12 +119,12 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
 12. Update the `pcc-operator` image defined in the Operator's ClusterServiceVersion.yaml `deployments.spec.template.spec.containers` element. 
     - Go to **Installed Operators** > **Prisma Cloud Compute Operator** > **YAML** 
     - Change 
-        ```
-        image: quay.io/prismacloud/pcc-operator@sha256:dbaf047ad0902269372c4a03f2d46402aca2adef8d227df637f59bc848d3d4d9
+        ```yaml
+        image: quay.io/prismacloud/pcc-operator@sha256:610a4786628389c56ad1ba1bdd834489e790067fb1d3f59e399e603da6d051c1
         ``` 
         to
-        ```
-        image: image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/pcc-operator@sha256:dbaf047ad0902269372c4a03f2d46402aca2adef8d227df637f59bc848d3d4d9
+        ```yaml
+        image: image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/pcc-operator@sha256:610a4786628389c56ad1ba1bdd834489e790067fb1d3f59e399e603da6d051c1
         ``` 
     - Click `Save`
 
@@ -144,10 +144,10 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
         - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/defender:defender_21_04_439`
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     - Click `Create`
-    - Confirm that the Console and Defender containers are running in **Workloads**>**Pods**
+    - Confirm that the Console and Defender containers are running in **Workloads > Pods**
 
 14. Create OpenShift external route to the Console
-    - Go to **Networking**>**Routes**
+    - Go to **Networking > Routes**
     - Click `Create Route`
         - Provide a `name` for the route (e.g. twistlock-console)
         - Leave `hostname` empty, Openshift will generate the FQDN based upon the route name (e.g. https://twistlock-console.apps.example.com)
@@ -159,7 +159,8 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
         - Click `Create`
     - Browse to the newly created external router (e.g. https://twistlock-console.apps.example.com)
 
-15. Login with the username and password specified in the `Credentials` section. If you did not use Kubernetes Secrets reset this account's password in **Manage**>**Authentication**>**Users**.
+15. Login with the username and password used in the secret or specified in the `Credentials` section.
+If you did not use Kubernetes Secrets reset this account's password in **Manage > Authentication > Users**.
 
 ## Upgrade Process
 The upgrade process will retain the existing deployment's configuration and settings. Upload the new Prisma Cloud Compute Console and Defender images as described in the [intallation process](#installation-process) to the isolated cluster. Please consult the [release notes](https://docs.prismacloudcompute.com/docs/releases/release-information/latest.html) first to determine if any additional procedures are required.  
@@ -195,4 +196,3 @@ Once the upgraded Console has been deployed upgrade the Defenders.
         - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/defender:defender_21_04_439`
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     - Click `Create`
-

@@ -75,8 +75,11 @@ manifests: kustomize operator-build operator-push ## Generate manifests and upda
 .PHONY: bundle
 bundle: manifests ## Generate bundle then validate generated files
 	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle --manifests --version $(VERSION) $(BUNDLE_METADATA_OPTS)
-	sed -i '.bak' 's/COPY bundle\//COPY /' bundle.Dockerfile && rm bundle.Dockerfile.bak
-	mv bundle.Dockerfile bundle/bundle.Dockerfile
+	cd bundle/manifests \
+	&& mv pcc-operator.clusterserviceversion.yaml pcc-operator.v$(VERSION).clusterserviceversion.yaml \
+	&& mv pcc.paloaltonetworks.com_consoledefenders.yaml consoledefenders.pcc.paloaltonetworks.com.crd.yaml \
+	&& mv pcc.paloaltonetworks.com_consoles.yaml consoles.pcc.paloaltonetworks.com.crd.yaml \
+	&& mv pcc.paloaltonetworks.com_defenders.yaml defenders.pcc.paloaltonetworks.com.crd.yaml
 	operator-sdk bundle validate bundle
 
 .PHONY: bundle-build

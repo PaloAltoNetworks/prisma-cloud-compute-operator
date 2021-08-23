@@ -69,16 +69,19 @@ BUNDLE_IMG ?= $(OPERATOR_IMAGE_BASE)-bundle:v$(VERSION)
 manifests: kustomize operator-build operator-push ## Generate manifests and update image reference
 	operator-sdk generate kustomize manifests -q
 	repo_digest=$$(docker inspect --format '{{ .RepoDigests }}' $(OPERATOR_IMG) | grep -Eo 'quay.io/prismacloud/pcc-operator@sha256:\w{64}') \
-	&& cd config/manager && $(KUSTOMIZE) edit set image controller="$$repo_digest"
+	&& scripts/update_csv.rb "$$repo_digest" \
+	&& cd config/manager && $(KUSTOMIZE) edit set image controller="$$repo_digest" \
 
 .PHONY: bundle
 bundle: manifests ## Generate bundle then validate generated files
-	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle --version $(VERSION) $(BUNDLE_METADATA_OPTS)
+	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle --manifests --version $(VERSION) $(BUNDLE_METADATA_OPTS)
+	sed -i '.bak' 's/COPY bundle\//COPY /' bundle.Dockerfile && rm bundle.Dockerfile.bak
+	mv bundle.Dockerfile bundle/bundle.Dockerfile
 	operator-sdk bundle validate bundle
 
 .PHONY: bundle-build
 bundle-build: ## Build bundle image
-	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
+	cd bundle && docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
 
 .PHONY: bundle-push
 bundle-push: ## Push bundle image

@@ -22,6 +22,6 @@ LABEL com.redhat.delivery.operator.bundle=true
 LABEL com.redhat.openshift.versions=v4.5-v4.7
 
 # Copy files to locations specified by labels.
-COPY bundle/manifests /manifests/
-COPY bundle/metadata /metadata/
-COPY bundle/tests/scorecard /tests/scorecard/
+COPY manifests /manifests/
+COPY metadata /metadata/
+COPY tests/scorecard /tests/scorecard/

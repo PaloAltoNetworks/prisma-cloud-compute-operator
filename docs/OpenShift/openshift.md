@@ -9,7 +9,7 @@ This documentation demonstrates the automated [installation](#installation-proce
     ```
 
 2. The Console is licensed and the intial administrator account is created during deployment. The account credentials and license can be supplied as arguments or as a Kubernetes Secret. To deploy using a Kubernetes Secret:
-    - Copy the following yaml into a file called `pcc-credentials.yaml`
+    - Copy the following yaml into a file called [pcc-credentials.yaml](pcc-credentials.yaml)
     
         ```yaml
         apiVersion: v1
@@ -40,7 +40,7 @@ This documentation demonstrates the automated [installation](#installation-proce
     - Click **Create instance** in the `Console and Defender` provided API
     - In the `Tool Bundle URL` field specify the path to the [update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching the version to be deployed. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
-    - If you are not using Kubernetes Secrets set the following in the `Credentials` section: 
+    - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section: 
 
         - **Access Token**: 32-character access token included in the license bundle
         - **License**: Product license included in the license bundle

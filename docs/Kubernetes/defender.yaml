@@ -9,6 +9,6 @@ spec:
   orchestrator: kubernetes
   version: '21_04_439'
   defenderConfig:
-    clusterAddress: twistlock-console.example.com
-    consoleAddress: https://twistlock-console.example.com:8083
+    clusterAddress: twistlock-console
+    consoleAddress: https://twistlock-console:8083
     docker: false

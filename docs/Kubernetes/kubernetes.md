@@ -79,7 +79,7 @@ This documentation demonstrates the automated [installation](#installation-proce
         spec:
           namespace: twistlock
           orchestrator: kubernetes
-          version: '21_04_439'
+          version: '21_08_514'
           consoleConfig:
             serviceType: ClusterIP
           defenderConfig:
@@ -89,7 +89,7 @@ This documentation demonstrates the automated [installation](#installation-proce
          - for docker based clusters set `docker: true`
          - the default serviceType is `NodePort`
         
-    - Set `version` to the Prisma Cloud Compute release version to be deployed (e.g. 21_04_439)
+    - Set `version` to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_514)
 
     - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section: 
         - **Access Token**: 32-character access token included in the license bundle
@@ -128,13 +128,13 @@ The upgrade process will retain the existing deployment's configuration and sett
         spec:
           namespace: twistlock
           orchestrator: kubernetes
-          version: '21_04_439'
+          version: '21_08_514'
           consoleConfig:
             serviceType: ClusterIP
         ```
     **NOTE:** the default serviceType is `NodePort`
     
-    - Set **version** to the Prisma Cloud Compute release version to be deployed (e.g. 21_04_439)section: 
+    - Set **version** to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_514)section: 
         
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     
@@ -156,7 +156,7 @@ The upgrade process will retain the existing deployment's configuration and sett
         spec:
         namespace: twistlock
         orchestrator: kubernetes
-        version: '21_04_439'
+        version: '21_08_514'
         defenderConfig:
             clusterAddress: twistlock-console
             consoleAddress: https://twistlock-console:8083
@@ -164,7 +164,7 @@ The upgrade process will retain the existing deployment's configuration and sett
         ```    
         **NOTE:** for docker based clusters set `docker: true`
 
-    - Set **version** to the version to be deployed (e.g. 21_04_439)
+    - Set **version** to the version to be deployed (e.g. 21_08_514)
         
     - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section: 
         - **Password**: password to an account that has defender-manager or higher role
@@ -174,4 +174,3 @@ The upgrade process will retain the existing deployment's configuration and sett
         ```bash
         kubectl apply -f ./defender.yaml
         ```
-

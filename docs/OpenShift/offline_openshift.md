@@ -68,7 +68,7 @@ On a host that has docker or podman installed and has connectivity to the Intern
 
     Notice that the `image` specifies the OpenShift cluster's internal image-registry's service name and port (`image-registry.openshift-image-registry.svc.cluster.local:5000`).
 
-    - Copy the following yaml into a file called `catalogsource.yaml`
+    - Copy the following yaml into a file called [catalogsource.yaml](catalogsource.yaml)
         ```yaml
         apiVersion: operators.coreos.com/v1alpha1
         kind: CatalogSource
@@ -133,7 +133,7 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
     - Click **Create instance** in the `Console and Defender` provided API
     - In the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 21_04_439)
-    - If you are not using Kubernetes Secrets set the following in the `Credentials` section:
+    - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section:
         - **Access Token**: 32-character access token included in the license bundle
         - **License**: Product license included in the license bundle
         - **Password**: Password to be used for the initial local administrator user. It is highly recommended that you change the password for this user in the Prisma Cloud Compute Console after install.

@@ -1,0 +1,14 @@
+---
+apiVersion: pcc.paloaltonetworks.com/v1alpha1
+kind: Defender
+metadata:
+  name: pcc-defender
+  namespace: twistlock
+spec:
+  namespace: twistlock
+  orchestrator: openshift
+  version: '21_04_439'
+  defenderConfig:
+    clusterAddress: twistlock-console
+    consoleAddress: https://twistlock-console:8083
+    docker: false

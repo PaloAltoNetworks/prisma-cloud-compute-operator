@@ -13,11 +13,11 @@ On a host that has docker or podman installed and has connectivity to the Intern
 1. Pull the required images.
     - the [operator image](https://quay.io/repository/prismacloud/pcc-operator) 
         ```bash
-        docker pull quay.io/prismacloud/pcc-operator:v0.1.0
+        docker pull quay.io/prismacloud/pcc-operator:v0.1.1
         ```
     - the [operator catalog image](https://quay.io/repository/prismacloud/pcc-operator-catalog)
         ```bash
-        docker pull quay.io/prismacloud/pcc-operator-catalog:v0.1.0
+        docker pull quay.io/prismacloud/pcc-operator-catalog:v0.1.1
         ```
     
     - the [Console and Defender images](https://docs.prismacloudcompute.com/docs/compute_edition/install/twistlock_container_images.html) for the version you are installing
@@ -28,8 +28,8 @@ On a host that has docker or podman installed and has connectivity to the Intern
 
 2. Save the images as tarballs.
     ```bash
-    docker save quay.io/prismacloud/pcc-operator:v0.1.0 | gzip > pcc-operator.tar.gz
-    docker save quay.io/prismacloud/pcc-operator-catalog:v0.1.0 | gzip > pcc-operator-catalog.tar.gz
+    docker save quay.io/prismacloud/pcc-operator:v0.1.1 | gzip > pcc-operator.tar.gz
+    docker save quay.io/prismacloud/pcc-operator-catalog:v0.1.1 | gzip > pcc-operator-catalog.tar.gz
     docker save registry.twistlock.com/twistlock/console:console_21_04_439 | gzip > console.tar.gz
     docker save registry.twistlock.com/twistlock/defender:defender_21_04_439 | gzip > defender.tar.gz
     ```
@@ -51,15 +51,15 @@ On a host that has docker or podman installed and has connectivity to the Intern
 
 6. Tag the images for your disconnected registry.
     ```bash
-    docker tag quay.io/prismacloud/pcc-operator:v0.1.0 default-route-openshift-image-registry.apps.example.com/twistlock/pcc-operator:v0.1.0
-    docker tag quay.io/prismacloud/pcc-operator-catalog:v0.1.0 default-route-openshift-image-registry.apps.example.com/openshift-marketplace/pcc-operator-catalog:v0.1.0
+    docker tag quay.io/prismacloud/pcc-operator:v0.1.1 default-route-openshift-image-registry.apps.example.com/twistlock/pcc-operator:v0.1.1
+    docker tag quay.io/prismacloud/pcc-operator-catalog:v0.1.1 default-route-openshift-image-registry.apps.example.com/openshift-marketplace/pcc-operator-catalog:v0.1.1
     docker tag registry.twistlock.com/twistlock/console:console_21_04_439 default-route-openshift-image-registry.apps.example.com/twistlock/console:console_21_04_439
     docker tag registry.twistlock.com/twistlock/defender:defender_21_04_439 default-route-openshift-image-registry.apps.example.com/twistlock/defender:defender_21_04_439
     ```
 7. Push the images to your disconnected registry.
     ```
-    docker push default-route-openshift-image-registry.apps.example.com/twistlock/pcc-operator:v0.1.0
-    docker push default-route-openshift-image-registry.apps.example.com/openshift-marketplace/pcc-operator-catalog:v0.1.0
+    docker push default-route-openshift-image-registry.apps.example.com/twistlock/pcc-operator:v0.1.1
+    docker push default-route-openshift-image-registry.apps.example.com/openshift-marketplace/pcc-operator-catalog:v0.1.1
     docker push default-route-openshift-image-registry.apps.example.com/twistlock/console:console_21_04_439
     docker push default-route-openshift-image-registry.apps.example.com/twistlock/defender:defender_21_04_439
     ```
@@ -120,11 +120,11 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
     - Go to **Installed Operators** > **Prisma Cloud Compute Operator** > **YAML** 
     - Change 
         ```
-        image: quay.io/prismacloud/pcc-operator@sha256:dbaf047ad0902269372c4a03f2d46402aca2adef8d227df637f59bc848d3d4d9
+        image: quay.io/prismacloud/pcc-operator@sha256:2d85b74175aa14121da206df1427aa14c6e041fdf9a0eb25925e6ded1ca1d96a
         ``` 
         to
         ```
-        image: image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/pcc-operator@sha256:dbaf047ad0902269372c4a03f2d46402aca2adef8d227df637f59bc848d3d4d9
+        image: image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/pcc-operator@sha256:2d85b74175aa14121da206df1427aa14c6e041fdf9a0eb25925e6ded1ca1d96a
         ``` 
     - Click `Save`
 

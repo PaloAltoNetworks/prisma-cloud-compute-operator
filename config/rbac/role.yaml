@@ -54,6 +54,33 @@ rules:
       - patch
       - watch
   ##
+  ## For monitor Istio support
+  ##
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+      - pods
+      - pods/proxy
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - networking.istio.io
+    resources:
+      - destinationrules
+      - gateways
+      - virtualservices
+    verbs:
+      - list
+  - apiGroups:
+      - security.istio.io
+    resources:
+      - authorizationpolicies
+      - peerauthentications
+    verbs:
+      - list
+  ##
   ## Rules for pcc.paloaltonetworks.com/v1alpha1, Kind: Console, Kind: ConsoleDefender, Kind: Defender
   ##
   - apiGroups:

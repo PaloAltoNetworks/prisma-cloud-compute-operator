@@ -6,8 +6,8 @@ metadata:
     alm-examples: "[]"
     capabilities: Seamless Upgrades
     categories: Security
-    containerImage: quay.io/prismacloud/pcc-operator@sha256:610a4786628389c56ad1ba1bdd834489e790067fb1d3f59e399e603da6d051c1
-    createdAt: '2021-08-23'
+    containerImage: quay.io/prismacloud/pcc-operator@sha256:2d85b74175aa14121da206df1427aa14c6e041fdf9a0eb25925e6ded1ca1d96a
+    createdAt: '2021-09-20'
     description: Deploy Prisma Cloud Compute for cloud-native security in your clusters
     olm.properties: '[{"type": "olm.maxOpenShiftVersion", "value": "4.7"}]'
     operators.openshift.io/infrastructure-features: '["Disconnected"]'

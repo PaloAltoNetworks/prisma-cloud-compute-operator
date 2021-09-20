@@ -1,4 +1,4 @@
-FROM quay.io/operator-framework/ansible-operator:v1.11
+FROM quay.io/operator-framework/ansible-operator:v1.12
 
 ARG VERSION
 ARG RELEASE=1

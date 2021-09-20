@@ -1,5 +1,5 @@
 ---
-password: "{{ lookup('env', 'PCC_PASSWORD') | default(credentials.password) }}"
-username: "{{ lookup('env', 'PCC_USERNAME') | default(credentials.username) }}"
+password: "{{ lookup('env', 'PCC_PASSWORD') or credentials.password }}"
+username: "{{ lookup('env', 'PCC_USERNAME') or credentials.username }}"
 
 work_dir: /opt/ansible/twistlock

@@ -85,9 +85,10 @@ This documentation demonstrates the automated [installation](#installation-proce
           defenderConfig:
             docker: false
         ```
-        **NOTE:** 
-         - for docker based clusters set `docker: true`
-         - the default serviceType is `NodePort`
+        **NOTES:**
+        - If installing Defenders only, be sure to verify the version of your Console and use the same version for Defender deployment.
+        - For docker-based clusters set `docker: true`.
+        - The default `serviceType` is `NodePort`.
         
     - Set `version` to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_514)
 
@@ -132,7 +133,8 @@ The upgrade process will retain the existing deployment's configuration and sett
           consoleConfig:
             serviceType: ClusterIP
         ```
-    **NOTE:** the default serviceType is `NodePort`
+        **NOTES:**
+        - The default `serviceType` is `NodePort`.
     
     - Set **version** to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_514)section: 
         
@@ -162,7 +164,8 @@ The upgrade process will retain the existing deployment's configuration and sett
             consoleAddress: https://twistlock-console:8083
             docker: false
         ```    
-        **NOTE:** for docker based clusters set `docker: true`
+        **NOTES:**
+        - For docker-based clusters set `docker: true`.
 
     - Set **version** to the version to be deployed (e.g. 21_08_514)
         

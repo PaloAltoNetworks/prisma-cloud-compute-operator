@@ -39,7 +39,8 @@ This documentation demonstrates the automated [installation](#installation-proce
     - Within the `twistlock` Project go to **Installed Operators** > **Prisma Cloud Compute Operator** > **Details**
     - Click **Create instance** in the `Console and Defender` provided API
     - In the `Tool Bundle URL` field specify the path to the [update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching the version to be deployed. The [Prisma Cloud Compute release bundle](https://docs.prismacloudcompute.com/docs/releases/release-information/download.html) can be used as well.  
-    - Set `Version` to the version to be deployed (e.g. 21_08_514)
+    - Set `Version` to the version to be deployed (e.g. 21_08_514).
+    If installing Defenders only, be sure to verify the version of your Console and use the same version for Defender deployment.
     - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section: 
 
         - **Access Token**: 32-character access token included in the license bundle

@@ -120,11 +120,11 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
     - Go to **Installed Operators** > **Prisma Cloud Compute Operator** > **YAML** 
     - Change 
         ```yaml
-        image: quay.io/prismacloud/pcc-operator@sha256:2d85b74175aa14121da206df1427aa14c6e041fdf9a0eb25925e6ded1ca1d96a
+        image: quay.io/prismacloud/pcc-operator@sha256:e5c9c4947755399481aa81d8ffc37543f3fcc81de8052a711cf836c83e6efa7b
         ``` 
         to
         ```yaml
-        image: image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/pcc-operator@sha256:2d85b74175aa14121da206df1427aa14c6e041fdf9a0eb25925e6ded1ca1d96a
+        image: image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/pcc-operator@sha256:e5c9c4947755399481aa81d8ffc37543f3fcc81de8052a711cf836c83e6efa7b
         ``` 
     - Click `Save`
 

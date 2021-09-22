@@ -70,7 +70,7 @@
 - name: Create Defender YAML file
   command: >
     linux/twistcli defender export {{ orchestrator }}
-    --user {{ username }} --password {{ password }}
+    --user {{ username }}
     --address https://twistlock-console.{{ namespace }}:8083
     --cluster-address twistlock-console
     {{ '--collect-pod-labels' if defenderConfig.collectPodLabels else '' }}
@@ -92,6 +92,7 @@
     --output {{ work_dir }}/twistlock_defender.yaml
   args:
     chdir: "{{ tools_dir.path }}"
+    stdin: "{{ password }}"
 
 - name: Create Defender from YAML file
   k8s:

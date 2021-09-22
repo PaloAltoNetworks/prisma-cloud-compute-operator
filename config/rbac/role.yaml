@@ -54,6 +54,15 @@ rules:
       - patch
       - watch
   ##
+  ## For label collection support
+  ##
+  - apiGroups:
+      - apps
+    resources:
+      - replicasets
+    verbs:
+      - get
+  ##
   ## For monitor Istio support
   ##
   - apiGroups:

@@ -544,7 +544,7 @@ spec:
                       name: pcc-credentials
                       optional: true
                 image: quay.io/prismacloud/pcc-operator@sha256:e5c9c4947755399481aa81d8ffc37543f3fcc81de8052a711cf836c83e6efa7b
-                imagePullPolicy: IfNotPresent
+                imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
                     path: /healthz

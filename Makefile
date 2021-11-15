@@ -1,5 +1,5 @@
 # VERSION defines the project version for the bundle.
-VERSION ?= 0.1.1
+VERSION ?= 0.2.0
 
 # CHANNELS define the bundle channels used in the bundle.
 ifdef CHANNELS
@@ -76,6 +76,7 @@ manifests: kustomize operator-build operator-push ## Generate manifests and upda
 bundle: manifests ## Generate bundle then validate generated files
 	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle --manifests --version $(VERSION) $(BUNDLE_METADATA_OPTS)
 	cd bundle/manifests \
+	&& rm -f pcc-operator.v*.clusterserviceversion.yaml \
 	&& mv pcc-operator.clusterserviceversion.yaml pcc-operator.v$(VERSION).clusterserviceversion.yaml \
 	&& mv pcc.paloaltonetworks.com_consoledefenders.yaml consoledefenders.pcc.paloaltonetworks.com.crd.yaml \
 	&& mv pcc.paloaltonetworks.com_consoles.yaml consoles.pcc.paloaltonetworks.com.crd.yaml \

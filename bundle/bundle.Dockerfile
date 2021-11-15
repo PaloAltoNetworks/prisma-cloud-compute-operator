@@ -7,7 +7,7 @@ LABEL operators.operatorframework.io.bundle.metadata.v1=metadata/
 LABEL operators.operatorframework.io.bundle.package.v1=pcc-operator
 LABEL operators.operatorframework.io.bundle.channels.v1=stable
 LABEL operators.operatorframework.io.bundle.channel.default.v1=stable
-LABEL operators.operatorframework.io.metrics.builder=operator-sdk-v1.11.0
+LABEL operators.operatorframework.io.metrics.builder=operator-sdk-v1.14.0
 LABEL operators.operatorframework.io.metrics.mediatype.v1=metrics+v1
 LABEL operators.operatorframework.io.metrics.project_layout=ansible.sdk.operatorframework.io/v1
 
@@ -19,7 +19,7 @@ LABEL operators.operatorframework.io.test.config.v1=tests/scorecard/
 # https://redhat-connect.gitbook.io/certified-operator-guide/ocp-deployment/operator-metadata/bundle-directory
 LABEL com.redhat.delivery.backport=true
 LABEL com.redhat.delivery.operator.bundle=true
-LABEL com.redhat.openshift.versions=v4.5-v4.7
+LABEL com.redhat.openshift.versions=v4.6
 
 # Copy files to locations specified by labels.
 COPY manifests /manifests/

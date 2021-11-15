@@ -26,7 +26,7 @@
     {{ '--monitor-istio' if defenderConfig.monitorIstio else '' }}
     {{ '--monitor-service-accounts' if defenderConfig.monitorServiceAccounts else '' }}
     {{ ('--namespace ' + namespace) if namespace is defined else '' }}
-    {{ ('--nodeSelector ' + defenderConfig.nodeLabels) if defenderConfig.nodeLabels is defined else '' }}
+    {{ ("--nodeSelector '" + defenderConfig.nodeLabels + "'") if defenderConfig.nodeLabels is defined else '' }}
     {{ '--privileged' if defenderConfig.privileged else '' }}
     {{ ('--project ' + defenderConfig.project) if defenderConfig.project is defined else '' }}
     {{ ('--proxy-address ' + defenderConfig.proxyAddress) if defenderConfig.proxyAddress is defined else '' }}
@@ -38,6 +38,17 @@
   args:
     chdir: "{{ tools_dir.path }}"
     stdin: "{{ password }}"
+
+- name: Add toleration to YAML file
+  lineinfile:
+    path: "{{ work_dir }}/twistlock_defender.yaml"
+    insertbefore: ^\s+containers:$
+    line: |2-
+            tolerations:
+            - key: {{ defenderConfig.tolerationKey }}
+              operator: "Exists"
+              effect: {{ defenderConfig.tolerationEffect }}
+  when: defenderConfig.toleration | bool
 
 - name: Create Defender from YAML file
   k8s:

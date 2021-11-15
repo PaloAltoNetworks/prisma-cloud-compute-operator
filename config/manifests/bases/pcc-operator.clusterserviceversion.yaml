@@ -6,12 +6,11 @@ metadata:
     alm-examples: "[]"
     capabilities: Seamless Upgrades
     categories: Security
-    containerImage: quay.io/prismacloud/pcc-operator@sha256:e5c9c4947755399481aa81d8ffc37543f3fcc81de8052a711cf836c83e6efa7b
-    createdAt: '2021-09-22'
+    containerImage: quay.io/prismacloud/pcc-operator@sha256:b8fcfbd6c51286c874e00db1bd35523386cec406fa4050ef44c0a887730cf9b8
+    createdAt: '2021-11-15'
     description: Deploy Prisma Cloud Compute for cloud-native security in your clusters
-    olm.properties: '[{"type": "olm.maxOpenShiftVersion", "value": "4.7"}]'
     operators.openshift.io/infrastructure-features: '["Disconnected"]'
-    operators.operatorframework.io/builder: operator-sdk-v1.11.0
+    operators.operatorframework.io/builder: operator-sdk-v1.14.0
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
     repository: https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator
     support: pcc-integrations@paloaltonetworks.com
@@ -34,7 +33,7 @@ spec:
         displayName: Orchestrator
         path: orchestrator
       - description: URL of the tool bundle containing twistcli, the tool used to
-          generate Prisma Cloud Compute YAML files. Can either be an [isolated upgrade](https://docs.twistlock.com/docs/government/isolated_upgrades/isolated_upgrades.html)
+          generate Prisma Cloud Compute YAML files. Can either be an isolated upgrade
           tarball or a release tarball URL.
         displayName: Tool Bundle URL
         path: toolBundleUrl
@@ -122,8 +121,8 @@ spec:
       - description: Whether or not to monitor ServiceAccounts.
         displayName: Monitor Service Accounts
         path: defenderConfig.monitorServiceAccounts
-      - description: Label to use as a nodeSelector for Defenders. Specify a label
-          and value (e.g. "kubernetes.io/hostname=node-name").
+      - description: 'Label to use as a nodeSelector for Defenders. Specify a label
+          and value (e.g. ''kubernetes.io/hostname: "node-name"'').'
         displayName: Node Selector Labels
         path: defenderConfig.nodeLabels
       - description: Run Defender in privileged mode.
@@ -148,6 +147,15 @@ spec:
       - description: Use the spc_t SELinux type.
         displayName: SELinux
         path: defenderConfig.selinuxEnabled
+      - description: Deploy Defenders with a toleration.
+        displayName: Toleration
+        path: defenderConfig.toleration
+      - description: Taint key that the toleration applies to.
+        displayName: Toleration Key
+        path: defenderConfig.tolerationKey
+      - description: Taint effect to match.
+        displayName: Toleration Effect
+        path: defenderConfig.tolerationEffect
       version: v1alpha1
     - description: Install the Prisma Cloud Compute Console
       displayName: Console
@@ -162,7 +170,7 @@ spec:
         displayName: Orchestrator
         path: orchestrator
       - description: URL of the tool bundle containing twistcli, the tool used to
-          generate Prisma Cloud Compute YAML files. Can either be an [isolated upgrade](https://docs.twistlock.com/docs/government/isolated_upgrades/isolated_upgrades.html)
+          generate Prisma Cloud Compute YAML files. Can either be an isolated upgrade
           tarball or a release tarball URL.
         displayName: Tool Bundle URL
         path: toolBundleUrl
@@ -237,7 +245,7 @@ spec:
         displayName: Orchestrator
         path: orchestrator
       - description: URL of the tool bundle containing twistcli, the tool used to
-          generate Prisma Cloud Compute YAML files. Can either be an [isolated upgrade](https://docs.twistlock.com/docs/government/isolated_upgrades/isolated_upgrades.html)
+          generate Prisma Cloud Compute YAML files. Can either be an isolated upgrade
           tarball or a release tarball URL.
         displayName: Tool Bundle URL
         path: toolBundleUrl
@@ -291,8 +299,8 @@ spec:
       - description: Whether or not to monitor ServiceAccounts.
         displayName: Monitor Service Accounts
         path: defenderConfig.monitorServiceAccounts
-      - description: Label to use as a nodeSelector for Defenders. Specify a label
-          and value (e.g. "kubernetes.io/hostname=node-name").
+      - description: 'Label to use as a nodeSelector for Defenders. Specify a label
+          and value (e.g. ''kubernetes.io/hostname: "node-name"'').'
         displayName: Node Selector Labels
         path: defenderConfig.nodeLabels
       - description: Run Defender in privileged mode.
@@ -317,6 +325,15 @@ spec:
       - description: Use the spc_t SELinux type.
         displayName: SELinux
         path: defenderConfig.selinuxEnabled
+      - description: Deploy Defenders with a toleration.
+        displayName: Toleration
+        path: defenderConfig.toleration
+      - description: Taint key that the toleration applies to.
+        displayName: Toleration Key
+        path: defenderConfig.tolerationKey
+      - description: Taint effect to match.
+        displayName: Toleration Effect
+        path: defenderConfig.tolerationEffect
       version: v1alpha1
   description: |
     ## Features

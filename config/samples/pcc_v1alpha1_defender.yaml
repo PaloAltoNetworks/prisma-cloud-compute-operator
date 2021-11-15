@@ -5,7 +5,7 @@ metadata:
   namespace: twistlock
 spec:
   namespace: twistlock
-  version: "21_04_439"
+  version: "21_08_520"
   defenderConfig:
     clusterAddress: twistlock-console.example.com
     consoleAddress: https://twistlock-console.example.com:8083

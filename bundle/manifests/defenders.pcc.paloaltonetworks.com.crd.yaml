@@ -67,6 +67,15 @@ spec:
                   selinuxEnabled:
                     default: false
                     type: boolean
+                  toleration:
+                    default: false
+                    type: boolean
+                  tolerationEffect:
+                    default: NoSchedule
+                    type: string
+                  tolerationKey:
+                    default: node-role.kubernetes.io/master
+                    type: string
                 type: object
               namespace:
                 type: string

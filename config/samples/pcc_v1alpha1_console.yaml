@@ -5,6 +5,6 @@ metadata:
   namespace: twistlock
 spec:
   namespace: twistlock
-  version: "21_04_439"
+  version: "21_08_520"
   consoleConfig:
     serviceType: ClusterIP

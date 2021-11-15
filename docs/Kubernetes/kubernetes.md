@@ -1,6 +1,6 @@
 # Kubernetes Deployment
 
-This documentation demonstrates the automated [installation](#installation-process) and [upgrade](#upgrade-process) processes for the Prisma Cloud Compute Console and Defenders within an Kubernetes cluster that is able to communicate with the [Kubernetes Community Operators](https://github.com/k8s-operatorhub/community-operators/tree/main/operators) and the [Prisma Cloud Compute container registry](https://docs.prismacloudcompute.com/docs/compute_edition/install/twistlock_container_images.html).
+This documentation demonstrates the automated [installation](#installation-process) and [upgrade](#upgrade-process) processes for the Prisma Cloud Compute Console and Defenders within a Kubernetes cluster that is able to communicate with the [Kubernetes Community Operators](https://github.com/k8s-operatorhub/community-operators/tree/main/operators) and the [Prisma Cloud Compute container registry](https://docs.prismacloudcompute.com/docs/compute_edition/install/twistlock_container_images.html).
 
 ## Installation Process
 1. Create the namespace for this deployment (e.g. `twistlock`).
@@ -136,7 +136,7 @@ The upgrade process will retain the existing deployment's configuration and sett
         **NOTES:**
         - The default `serviceType` is `NodePort`.
     
-    - Set **version** to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_514)section: 
+    - Set **version** to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_514) section 
         
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     

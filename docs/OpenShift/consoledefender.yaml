@@ -7,7 +7,7 @@ metadata:
 spec:
   namespace: twistlock
   orchestrator: openshift
-  version: '21_08_514'
+  version: '21_08_520'
   consoleConfig:
     serviceType: ClusterIP
   defenderConfig:

@@ -6,20 +6,20 @@ This documentation demonstrates the automated [installation](#installation-proce
 1. Pull the required images.
     - the [operator image](https://quay.io/repository/prismacloud/pcc-operator) 
         ```bash
-        docker pull quay.io/prismacloud/pcc-operator:v0.1.1
+        docker pull quay.io/prismacloud/pcc-operator:v0.2.0
         ```
 
-    - the [Console and Defender images](https://docs.prismacloudcompute.com/docs/compute_edition/install/twistlock_container_images.html) for the version you are installing
+    - the [Console and Defender images](https://docs.paloaltonetworks.com/prisma/prisma-cloud/prisma-cloud-admin-compute/install/twistlock_container_images.html) for the version you are installing
         ```bash
-        docker pull registry.twistlock.com/twistlock/console:console_21_08_514
-        docker pull registry.twistlock.com/twistlock/defender:defender_21_08_514
+        docker pull registry.twistlock.com/twistlock/console:console_21_08_520
+        docker pull registry.twistlock.com/twistlock/defender:defender_21_08_520
         ```
 
 2. Save the images as tarballs.
     ```bash
-    docker save quay.io/prismacloud/pcc-operator:v0.1.1 | gzip > pcc-operator.tar.gz
-    docker save registry.twistlock.com/twistlock/console:console_21_08_514 | gzip > console.tar.gz
-    docker save registry.twistlock.com/twistlock/defender:defender_21_08_514 | gzip > defender.tar.gz
+    docker save quay.io/prismacloud/pcc-operator:v0.2.0 | gzip > pcc-operator.tar.gz
+    docker save registry.twistlock.com/twistlock/console:console_21_08_520 | gzip > console.tar.gz
+    docker save registry.twistlock.com/twistlock/defender:defender_21_08_520 | gzip > defender.tar.gz
     ```
 
 3. Pull the PaloAltoNetworks/prisma-cloud-compute-operator GitHub repo.
@@ -27,9 +27,9 @@ This documentation demonstrates the automated [installation](#installation-proce
     wget https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/archive/refs/heads/main.zip 
     ```
 
-4. Pull the `Tool Bundle URL` field specify the path to the [offline update tool bundle](https://docs.prismacloudcompute.com/docs/government/isolated_upgrades/isolated_upgrades.html) matching the version to be deployed. The [Prisma Cloud Compute release bundle](https://docs.paloaltonetworks.com/prisma/prisma-cloud/21-08/prisma-cloud-compute-edition-release-notes/release-information/release-notes-21-08.html) can be used as well.   
+4. Pull the `Tool Bundle URL` field specify the path to the offline update tool bundle matching the version to be deployed. The Prisma Cloud Compute release bundle can be used as well.   
     ```bash
-    wget https://cdn.twistlock.com/isolated_upgrades/v21_08_514/v21_08_514_isolated_update.tar.gz
+    wget https://cdn.twistlock.com/isolated_upgrades/v21_08_520/v21_08_520_isolated_update.tar.gz
     ```
 
 5. Move the image tarballs, the GitHub repo zip file and offline update tool bundle to a host that has docker installed and has access to the disconnected cluster.
@@ -37,19 +37,19 @@ This documentation demonstrates the automated [installation](#installation-proce
 6. Docker load, tag and push the images to a registry that is accessible (e.g. 10.105.219.150) from your isolated Kubernetes cluster.
     ```bash
     docker load < pcc_operator.tar.gz
-    docker tag 3eee0ee3aef5 10.105.219.150/pcc-operator:v0.1.1
-    docker push 10.105.219.150/pcc-operator:v0.1.1
+    docker tag 3eee0ee3aef5 10.105.219.150/pcc-operator:v0.2.0
+    docker push 10.105.219.150/pcc-operator:v0.2.0
 
     docker load < console.tar.gz
-    docker tag 58c779558b27 10.105.219.150/console:console_21_08_514
-    docker push 10.105.219.150/console:console_21_08_514
+    docker tag 58c779558b27 10.105.219.150/console:console_21_08_520
+    docker push 10.105.219.150/console:console_21_08_520
 
     docker load < defender.tar.gz
-    docker tag aaf13f247f08 10.105.219.150/defender:defender_21_08_514
-    docker push 10.105.219.150/defender:defender_21_08_514
+    docker tag aaf13f247f08 10.105.219.150/defender:defender_21_08_520
+    docker push 10.105.219.150/defender:defender_21_08_520
     ```
 
-7. Host the offline update tool bundle v21_08_514_isolated_update.tar.gz file in an http/https location where your isolated cluster can reach and pull this file. For example, http://192.168.49.2:30001/v21_08_514_isolated_update.tar.gz
+7. Host the offline update tool bundle v21_08_520_isolated_update.tar.gz file in an http/https location where your isolated cluster can reach and pull this file. For example, http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz
 
 8. Unzip the PaloAltoNetworks/prisma-cloud-compute-operator GitHub repo.
     ```bash 
@@ -69,16 +69,20 @@ This documentation demonstrates the automated [installation](#installation-proce
         apiVersion: v1
         kind: Secret
         metadata:
-            name: pcc-credentials
-            namespace: twistlock
+          name: pcc-credentials
+          namespace: twistlock
         data:
-            accessToken: <base64 encoded access token>
-            license: <base64 encoded license key>
-            password: <base64 encoded password>
-            username: <base64 encoded username>
+          accessToken: <base64 encoded access token>
+          license: <base64 encoded license key>
+          password: <base64 encoded password>
+          username: <base64 encoded username>
         ```
     
-    - Base64 encode your `accessToken`, `license`, `password` & `username` values and update the `pcc-credentials.yaml` file. For example: ```echo -n "admin" | base64``` output: ```YWRtaW4=``` 
+    - Base64 encode your `accessToken`, `license`, `password`, and `username` values and update the `pcc-credentials.yaml` file. For example:
+        ```bash
+        $ echo -n "admin" | base64
+        YWRtaW4=
+        ```
     
     - Create the secret within the cluster.
         ```bash
@@ -95,8 +99,8 @@ This documentation demonstrates the automated [installation](#installation-proce
 
     images:
     - digest: sha256:e5c9c4947755399481aa81d8ffc37543f3fcc81de8052a711cf836c83e6efa7b
-    name: controller
-    newName: quay.io/prismacloud/pcc-operator
+      name: controller
+      newName: quay.io/prismacloud/pcc-operator
     ```
     to:
     ```yaml
@@ -108,8 +112,8 @@ This documentation demonstrates the automated [installation](#installation-proce
 
     images:
     - name: controller
-    newName: 10.105.219.150/pcc-operator
-    newTag: v0.1.1
+      newName: 10.105.219.150/pcc-operator
+      newTag: v0.2.0
     ```
 
 4. Change directory to the GitHub repo's config/deploy and deploy the pcc-operator. 
@@ -129,22 +133,22 @@ This documentation demonstrates the automated [installation](#installation-proce
         spec:
           namespace: twistlock
           orchestrator: kubernetes
-          version: '21_08_514'
-          toolBundleUrl: http://192.168.49.2:30001/v21_08_514_isolated_update.tar.gz
+          version: '21_08_520'
+          toolBundleUrl: http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz
           consoleConfig:
             serviceType: ClusterIP
-            imageName: 10.105.219.150/console:console_21_08_514
+            imageName: 10.105.219.150/console:console_21_08_520
           defenderConfig:
             docker: true
-            imageName: 10.105.219.150/defender:defender_21_08_514
+            imageName: 10.105.219.150/defender:defender_21_08_520
         ```
         **NOTES:**
         - For docker-based clusters set `docker: true`.
         - The default `serviceType` is `NodePort`.
         
-    - Set `version` to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_514).
+    - Set `version` to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_520).
 
-    - Set `toolBundleUrl` to the offline update tool bundle v21_08_514_isolated_update.tar.gz URL. For example, http://192.168.49.2:30001/v21_08_514_isolated_update.tar.gz
+    - Set `toolBundleUrl` to the offline update tool bundle v21_08_520_isolated_update.tar.gz URL. For example, http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz
     
     - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section: 
         - **Access Token**: 32-character access token included in the license bundle
@@ -165,7 +169,7 @@ This documentation demonstrates the automated [installation](#installation-proce
    
 6. Establish communications to the twistlock-console service’s management-port-https port (default 8083/TCP) using a Kubernetes LoadBalancer or your organization’s approved cluster ingress technology. 
     
-7. Login with the username and password specified in the `Credentials` section. If you did not use Kubernetes Secrets reset this account's password in **Manage**>**Authentication**>**Users**.
+7. Login with the username and password specified in the `Credentials` section. If you did not use Kubernetes Secrets reset this account's password in **Manage > Authentication > Users**.
 
 ## Upgrade Process
 The upgrade process will retain the existing deployment's configuration and settings. Please consult the [release notes](https://docs.prismacloudcompute.com/docs/releases/release-information/latest.html) first to determine if any additional procedures are required.  
@@ -183,18 +187,18 @@ The upgrade process will retain the existing deployment's configuration and sett
         spec:
           namespace: twistlock
           orchestrator: kubernetes
-          version: '21_08_514'
-          toolBundleUrl: http://192.168.49.2:30001/v21_08_514_isolated_update.tar.gz
+          version: '21_08_520'
+          toolBundleUrl: http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz
           consoleConfig:
             serviceType: ClusterIP
-            imageName: 10.105.219.150/console:console_21_08_514
+            imageName: 10.105.219.150/console:console_21_08_520
         ```
         **NOTES:**
         - The default `serviceType` is `NodePort`.
     
-    - Set **version** to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_514) section.
+    - Set **version** to the Prisma Cloud Compute release version to be deployed (e.g. 21_08_520) section.
 
-    - Set `toolBundleUrl` to the offline update tool bundle v21_08_514_isolated_update.tar.gz URL. For example, http://192.168.49.2:30001/v21_08_514_isolated_update.tar.gz 
+    - Set `toolBundleUrl` to the offline update tool bundle v21_08_520_isolated_update.tar.gz URL. For example, http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz.
         
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     
@@ -211,23 +215,23 @@ The upgrade process will retain the existing deployment's configuration and sett
         apiVersion: pcc.paloaltonetworks.com/v1alpha1
         kind: Defender
         metadata:
-        name: pcc-defender
-        namespace: twistlock
+          name: pcc-defender
+          namespace: twistlock
         spec:
-        namespace: twistlock
-        orchestrator: kubernetes
-        version: '21_08_514'
-        defenderConfig:
+          namespace: twistlock
+          orchestrator: kubernetes
+          version: '21_08_520'
+          defenderConfig:
             clusterAddress: twistlock-console
             consoleAddress: https://twistlock-console:8083
-            imageName: 10.105.219.150/defender:defender_21_08_514
+            imageName: 10.105.219.150/defender:defender_21_08_520
             docker: true
         ```    
         **NOTES:**
         - Ensure the version of your Console is the same version for Defender deployment.
         - For docker-based clusters set `docker: true`.
 
-    - Set **version** to the version to be deployed (e.g. 21_08_514).
+    - Set **version** to the version to be deployed (e.g. 21_08_520).
         
     - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section: 
         - **Password**: password to an account that has defender-manager or higher role

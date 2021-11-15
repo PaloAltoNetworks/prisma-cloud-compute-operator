@@ -90,7 +90,7 @@ They are ultimately passed to `twistcli` for YAML generation.
   - **defenderConfig.monitorServiceAccounts** (string)  
   Must be true or false.
   - **defenderConfig.nodeLabels** (string)  
-  Label to use as a nodeSelector for Defenders. Specify a label and value (e.g. "kubernetes.io/hostname=node-name").
+  Label to use as a nodeSelector for Defenders. Specify a label and value (e.g. 'kubernetes.io/hostname: "node-name"').
   - **defenderConfig.privileged** (string)  
   Run Defender in privileged mode.
   Must be true or false.
@@ -108,3 +108,12 @@ They are ultimately passed to `twistcli` for YAML generation.
   - **defenderConfig.selinuxEnabled** (string)  
   Use the spc_t SELinux type.
   Must be true or false.
+  - **defenderConfig.toleration** (string)
+  Deploy Defenders with a toleration.
+  Must be true or false.
+  - **defenderConfig.tolerationKey** (string)
+  Taint key that the toleration applies to.
+  Default is node-role.kubernetes.io/master.
+  - **defenderConfig.tolerationEffect** (string)
+  Taint effect to match.
+  Default is NoSchedule.

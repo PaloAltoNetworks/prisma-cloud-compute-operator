@@ -73,6 +73,7 @@
     --user {{ username }}
     --address https://twistlock-console.{{ namespace }}:8083
     --cluster-address twistlock-console
+    {{ ('--cluster ' + defenderConfig.cluster) if defenderConfig.cluster is defined else '' }}
     {{ '--collect-pod-labels' if defenderConfig.collectPodLabels else '' }}
     {{ '--cri' if not defenderConfig.docker else '' }}
     {{ ('--docker-socket-path ' + defenderConfig.dockerSocketPath) if defenderConfig.dockerSocketPath is defined else '' }}

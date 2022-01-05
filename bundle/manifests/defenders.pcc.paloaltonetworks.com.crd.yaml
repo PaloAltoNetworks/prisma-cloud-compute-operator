@@ -27,6 +27,8 @@ spec:
                 type: object
               defenderConfig:
                 properties:
+                  cluster:
+                    type: string
                   clusterAddress:
                     type: string
                   collectPodLabels:

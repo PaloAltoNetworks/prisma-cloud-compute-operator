@@ -67,6 +67,9 @@ They are ultimately passed to `twistcli` for YAML generation.
 - **defenderConfig** (PrismaCloudComputeDefenderConfig)  
 Options for installing Defender.
 They are ultimately passed to `twistcli` for YAML generation.
+  - **defenderConfig.cluster** (string)  
+  A cluster name to identify the openshift cluster.
+  If no value specified, defender will try to automatically get the cluster name from the cloud provider.
   - **defenderConfig.clusterAddress** (string)  
   Host name used by Defender to verify Console certificate.
   Must be one of the SANs listed at Manage > Defenders > Names.

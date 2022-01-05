@@ -18,6 +18,7 @@
     --user {{ username }}
     --address {{ defenderConfig.consoleAddress }}
     --cluster-address {{ defenderConfig.clusterAddress }}
+    {{ ('--cluster ' + defenderConfig.cluster) if defenderConfig.cluster is defined else '' }}
     {{ '--collect-pod-labels' if defenderConfig.collectPodLabels else '' }}
     {{ '--cri' if not defenderConfig.docker else '' }}
     {{ ('--docker-socket-path ' + defenderConfig.dockerSocketPath) if defenderConfig.dockerSocketPath is defined else '' }}

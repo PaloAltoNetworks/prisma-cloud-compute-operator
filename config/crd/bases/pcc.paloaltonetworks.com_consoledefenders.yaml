@@ -67,6 +67,8 @@ spec:
               defenderConfig:
                 type: object
                 properties:
+                  cluster:
+                    type: string
                   collectPodLabels:
                     type: boolean
                     default: false

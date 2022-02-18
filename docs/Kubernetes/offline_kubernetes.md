@@ -27,11 +27,11 @@ This documentation demonstrates the automated [installation](#installation-proce
     wget https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/archive/refs/heads/main.zip 
     ```
 
-4. Pull the `Tool Bundle URL` field specify the path to the offline update tool bundle matching the version to be deployed. The Prisma Cloud Compute release bundle can be used as well.   
+4. Download the offline update tool bundle [matching the version to be deployed](https://docs.paloaltonetworks.com/prisma/prisma-cloud/prisma-cloud-compute-edition-public-sector/isolated_upgrades/releases.html) (e.g. v21_08_520).    
     ```bash
     wget https://cdn.twistlock.com/isolated_upgrades/v21_08_520/v21_08_520_isolated_update.tar.gz
     ```
-
+   
 5. Move the image tarballs, the GitHub repo zip file and offline update tool bundle to a host that has docker installed and has access to the disconnected cluster.
 
 6. Docker load, tag and push the images to a registry that is accessible (e.g. 10.105.219.150) from your isolated Kubernetes cluster.

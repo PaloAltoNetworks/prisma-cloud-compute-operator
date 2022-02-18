@@ -32,14 +32,19 @@ On a host that has docker or podman installed and has connectivity to the Intern
     docker save registry.twistlock.com/twistlock/defender:defender_22_01_840 | gzip > defender.tar.gz
     ```
 
-3. Move the image tarballs to a host that has docker or podman installed and has access to the disconnected cluster.
+3. Download the offline update tool bundle [matching the version to be deployed](https://docs.paloaltonetworks.com/prisma/prisma-cloud/prisma-cloud-compute-edition-public-sector/isolated_upgrades/releases.html) (e.g. v21_08_520).    
+    ```bash
+    wget https://cdn.twistlock.com/isolated_upgrades/v21_08_520/v21_08_520_isolated_update.tar.gz
+    ```
 
-4. Create the Project (namespace) for this deployment (e.g. `twistlock`).
+4. Move the image tarballs and offline update tool bundle to a host that has docker or podman installed and has access to the disconnected cluster.
+
+5. Create the Project (namespace) for this deployment (e.g. `twistlock`).
     ```bash
     oc create ns twistlock
     ```
 
-5. Load the images.
+6. Load the images.
     ```bash
     docker load -i pcc-operator.tar.gz
     docker load -i pcc-operator-catalog.tar.gz
@@ -47,14 +52,14 @@ On a host that has docker or podman installed and has connectivity to the Intern
     docker load -i defender.tar.gz
     ```
 
-6. Tag the images for your disconnected registry.
+7. Tag the images for your disconnected registry.
     ```bash
     docker tag quay.io/prismacloud/pcc-operator:v0.2.0 default-route-openshift-image-registry.apps.example.com/twistlock/pcc-operator:v0.2.0
     docker tag quay.io/prismacloud/pcc-operator-catalog:v0.2.0 default-route-openshift-image-registry.apps.example.com/openshift-marketplace/pcc-operator-catalog:v0.2.0
     docker tag registry.twistlock.com/twistlock/console:console_22_01_840 default-route-openshift-image-registry.apps.example.com/twistlock/console:console_22_01_840
     docker tag registry.twistlock.com/twistlock/defender:defender_22_01_840 default-route-openshift-image-registry.apps.example.com/twistlock/defender:defender_22_01_840
     ```
-7. Push the images to your disconnected registry.
+8. Push the images to your disconnected registry.
     ```
     docker push default-route-openshift-image-registry.apps.example.com/twistlock/pcc-operator:v0.2.0
     docker push default-route-openshift-image-registry.apps.example.com/openshift-marketplace/pcc-operator-catalog:v0.2.0
@@ -62,7 +67,10 @@ On a host that has docker or podman installed and has connectivity to the Intern
     docker push default-route-openshift-image-registry.apps.example.com/twistlock/defender:defender_22_01_840
     ```
 
-8. Create the `CatalogSource` object that populates OperatorHub in OpenShift.
+9. Host the offline update tool bundle v21_08_520_isolated_update.tar.gz file in an http/https location where your isolated OpenShift cluster can reach and pull this file. For example, http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz
+
+
+10. Create the `CatalogSource` object that populates OperatorHub in OpenShift.
 
     Notice that the `image` specifies the OpenShift cluster's internal image-registry's service name and port (`image-registry.openshift-image-registry.svc.cluster.local:5000`).
 
@@ -86,7 +94,7 @@ On a host that has docker or podman installed and has connectivity to the Intern
         ```bash
         oc apply -f catalogsource.yaml
         ```
-9. The Console is licensed and the intial administrator account is created during deployment. The account credentials and license can be supplied as arguments or as a Kubernetes Secret. To deploy using a Kubernetes Secret:
+11. The Console is licensed and the intial administrator account is created during deployment. The account credentials and license can be supplied as arguments or as a Kubernetes Secret. To deploy using a Kubernetes Secret:
     - Copy the following yaml into a file called `pcc-credentials.yaml`
     
         ```yaml
@@ -114,12 +122,12 @@ On a host that has docker or podman installed and has connectivity to the Intern
         oc apply -f pcc-credentials.yaml
         ```    
 
-10. In the OCP web console, navigate to **Operators > OperatorHub** and search for `Prisma Cloud Compute Operator`.
+12. In the OCP web console, navigate to **Operators > OperatorHub** and search for `Prisma Cloud Compute Operator`.
 You can apply the `Infrastructure features: disconnected` filter to refine the search.
 
-11. Install the Prisma Cloud Compute Operator in the `twistlock` namespace.
+13. Install the Prisma Cloud Compute Operator in the `twistlock` namespace.
     
-12. Update the `pcc-operator` image defined in the Operator's ClusterServiceVersion.yaml `deployments.spec.template.spec.containers` element. 
+14. Update the `pcc-operator` image defined in the Operator's ClusterServiceVersion.yaml `deployments.spec.template.spec.containers` element. 
     - Go to **Installed Operators > Prisma Cloud Compute Operator > YAML** 
     - Change 
         ```yaml
@@ -131,10 +139,10 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
         ``` 
     - Click `Save`
 
-13. Install Console and Defenders.
+15. Install Console and Defenders.
     - Within the `twistlock` Project go to **Installed Operators > Prisma Cloud Compute Operator > Details**
     - Click **Create instance** in the `Console and Defender` provided API
-    - In the `Tool Bundle URL` field specify the path to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.  
+    - In the `Tool Bundle URL` field specify the path (e.g. http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz) to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 22_01_840)
     - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section:
         - **Access Token**: 32-character access token included in the license bundle
@@ -149,7 +157,7 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
     - Click `Create`
     - Confirm that the Console and Defender containers are running in **Workloads > Pods**
 
-14. Create OpenShift external route to the Console
+16. Create OpenShift external route to the Console
     - Go to **Networking > Routes**
     - Click `Create Route`
         - Provide a `name` for the route (e.g. twistlock-console)
@@ -162,7 +170,7 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
         - Click `Create`
     - Browse to the newly created external router (e.g. https://twistlock-console.apps.example.com)
 
-15. Login with the username and password used in the secret or specified in the `Credentials` section.
+17. Login with the username and password used in the secret or specified in the `Credentials` section.
 If you did not use Kubernetes Secrets reset this account's password in **Manage > Authentication > Users**.
 
 ## Upgrade Process
@@ -172,7 +180,7 @@ The upgrade process will retain the existing deployment's configuration and sett
 - Within the `twistlock` Project go to **Installed Operators > Prisma Cloud Compute Operator > Details**
     - Click **Create instance** in the `Console` provided API
     - In the `Orchestrator` field enter `openshift`
-    - In the `Tool Bundle URL` field specify the path to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.  
+    - In the `Tool Bundle URL` field specify the path (e.g. http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz) to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.  
     - Set `Version` to the version to be deployed (e.g. 22_01_840)
     - If you are not using Kubernetes Secrets set the following in the `Credentials` section: 
         - **Access Token**: `license access token`
@@ -188,7 +196,7 @@ The upgrade process will retain the existing deployment's configuration and sett
 Once the upgraded Console has been deployed upgrade the Defenders.
 - Within the `twistlock` Project go to **Installed Operators > Prisma Cloud Compute Operator > Details**
     - Click **Create instance** in the `Defender` provided API
-    - In the `Tool Bundle URL` field specify the path to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.   
+    - In the `Tool Bundle URL` field specify the path (e.g. http://192.168.49.2:30001/v21_08_520_isolated_update.tar.gz) to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.   
     - Set `Version` to the version to be deployed (e.g. 22_01_840)
     - In the `Credentials` section: 
         - **Password**: password to an account that has defender-manager or higher role

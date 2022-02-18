@@ -1,5 +1,3 @@
-# OpenShift Offline Deployment
-
 This documentation demonstrates the automated [installation](#installation-process) and [upgrade](#upgrade-process) processes for the Prisma Cloud Compute Console and Defenders within an isolated OpenShift Container Platform using the [Operators for isolated environments guidance](https://cloud.redhat.com/blog/is-your-operator-air-gap-friendly).
 
 In this example we utilize the OCP built-in image registry for the storage of the Console, Defender and Operator images.
@@ -22,16 +20,16 @@ On a host that has docker or podman installed and has connectivity to the Intern
     
     - the [Console and Defender images](https://docs.paloaltonetworks.com/prisma/prisma-cloud/prisma-cloud-admin-compute/install/twistlock_container_images.html) for the version you are installing
         ```bash
-        docker pull registry.twistlock.com/twistlock/console:console_21_08_520
-        docker pull registry.twistlock.com/twistlock/defender:defender_21_08_520
+        docker pull registry.twistlock.com/twistlock/console:console_22_01_840
+        docker pull registry.twistlock.com/twistlock/defender:defender_22_01_840
         ```
 
 2. Save the images as tarballs.
     ```bash
     docker save quay.io/prismacloud/pcc-operator:v0.2.0 | gzip > pcc-operator.tar.gz
     docker save quay.io/prismacloud/pcc-operator-catalog:v0.2.0 | gzip > pcc-operator-catalog.tar.gz
-    docker save registry.twistlock.com/twistlock/console:console_21_08_520 | gzip > console.tar.gz
-    docker save registry.twistlock.com/twistlock/defender:defender_21_08_520 | gzip > defender.tar.gz
+    docker save registry.twistlock.com/twistlock/console:console_22_01_840 | gzip > console.tar.gz
+    docker save registry.twistlock.com/twistlock/defender:defender_22_01_840 | gzip > defender.tar.gz
     ```
 
 3. Move the image tarballs to a host that has docker or podman installed and has access to the disconnected cluster.
@@ -53,15 +51,15 @@ On a host that has docker or podman installed and has connectivity to the Intern
     ```bash
     docker tag quay.io/prismacloud/pcc-operator:v0.2.0 default-route-openshift-image-registry.apps.example.com/twistlock/pcc-operator:v0.2.0
     docker tag quay.io/prismacloud/pcc-operator-catalog:v0.2.0 default-route-openshift-image-registry.apps.example.com/openshift-marketplace/pcc-operator-catalog:v0.2.0
-    docker tag registry.twistlock.com/twistlock/console:console_21_08_520 default-route-openshift-image-registry.apps.example.com/twistlock/console:console_21_08_520
-    docker tag registry.twistlock.com/twistlock/defender:defender_21_08_520 default-route-openshift-image-registry.apps.example.com/twistlock/defender:defender_21_08_520
+    docker tag registry.twistlock.com/twistlock/console:console_22_01_840 default-route-openshift-image-registry.apps.example.com/twistlock/console:console_22_01_840
+    docker tag registry.twistlock.com/twistlock/defender:defender_22_01_840 default-route-openshift-image-registry.apps.example.com/twistlock/defender:defender_22_01_840
     ```
 7. Push the images to your disconnected registry.
     ```
     docker push default-route-openshift-image-registry.apps.example.com/twistlock/pcc-operator:v0.2.0
     docker push default-route-openshift-image-registry.apps.example.com/openshift-marketplace/pcc-operator-catalog:v0.2.0
-    docker push default-route-openshift-image-registry.apps.example.com/twistlock/console:console_21_08_520
-    docker push default-route-openshift-image-registry.apps.example.com/twistlock/defender:defender_21_08_520
+    docker push default-route-openshift-image-registry.apps.example.com/twistlock/console:console_22_01_840
+    docker push default-route-openshift-image-registry.apps.example.com/twistlock/defender:defender_22_01_840
     ```
 
 8. Create the `CatalogSource` object that populates OperatorHub in OpenShift.
@@ -103,6 +101,7 @@ On a host that has docker or podman installed and has connectivity to the Intern
           password: <base64 encoded password>
           username: <base64 encoded username>
         ```
+    - Quick note: The `password:` comes before the `username:`.  
     
     - Base64 encode your `accessToken`, `license`, `password`, and `username` values and update the `pcc-credentials.yaml` file. For example:
         ```bash
@@ -136,16 +135,16 @@ You can apply the `Infrastructure features: disconnected` filter to refine the s
     - Within the `twistlock` Project go to **Installed Operators > Prisma Cloud Compute Operator > Details**
     - Click **Create instance** in the `Console and Defender` provided API
     - In the `Tool Bundle URL` field specify the path to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.  
-    - Set `Version` to the version to be deployed (e.g. 21_08_520)
+    - Set `Version` to the version to be deployed (e.g. 22_01_840)
     - If you are not using Kubernetes Secrets set the following in the [Credentials](resource_spec.md) section:
         - **Access Token**: 32-character access token included in the license bundle
         - **License**: Product license included in the license bundle
         - **Password**: Password to be used for the initial local administrator user. It is highly recommended that you change the password for this user in the Prisma Cloud Compute Console after install.
         - **Username**: Username to be used for the initial local administrator user.
     - In the `Console Installation Options` section:
-        - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/console:console_21_08_520`
+        - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/console:console_22_01_840`
     - In the `Defender Installation Options` section:
-        - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/defender:defender_21_08_520`
+        - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/defender:defender_22_01_840`
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     - Click `Create`
     - Confirm that the Console and Defender containers are running in **Workloads > Pods**
@@ -174,14 +173,14 @@ The upgrade process will retain the existing deployment's configuration and sett
     - Click **Create instance** in the `Console` provided API
     - In the `Orchestrator` field enter `openshift`
     - In the `Tool Bundle URL` field specify the path to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.  
-    - Set `Version` to the version to be deployed (e.g. 21_08_520)
+    - Set `Version` to the version to be deployed (e.g. 22_01_840)
     - If you are not using Kubernetes Secrets set the following in the `Credentials` section: 
         - **Access Token**: `license access token`
         - **License**: `license key`
         - **Password**: `admin account password`
         - **Username**: `admin account username`
     - In the `Console Installation Options` section:
-        - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/console:console_21_08_520`
+        - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/console:console_22_01_840`
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     - Click `Create`
 
@@ -190,13 +189,13 @@ Once the upgraded Console has been deployed upgrade the Defenders.
 - Within the `twistlock` Project go to **Installed Operators > Prisma Cloud Compute Operator > Details**
     - Click **Create instance** in the `Defender` provided API
     - In the `Tool Bundle URL` field specify the path to the offline update tool bundle matching the version to be deployed. Host this tar.gz file in an http/https location where your isolated cluster can reach and pull this file. The Prisma Cloud Compute release bundle can be used as well.   
-    - Set `Version` to the version to be deployed (e.g. 21_08_520)
+    - Set `Version` to the version to be deployed (e.g. 22_01_840)
     - In the `Credentials` section: 
         - **Password**: password to an account that has defender-manager or higher role
         - **Username**: username to an account that has defender-manager or higher role
     - In the `Defender Installation Options` section:
         - **Cluster Address**: `twistlock-console` name of the Console's service
         - **Console Address**: `https://twistlock-console:8083` Console's service API endpoint
-        - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/defender:defender_21_08_520`
+        - **Image Name**: `image-registry.openshift-image-registry.svc.cluster.local:5000/twistlock/defender:defender_22_01_840`
     - Refer to the [field necessity table](resource_spec.md) for additional field details.
     - Click `Create`

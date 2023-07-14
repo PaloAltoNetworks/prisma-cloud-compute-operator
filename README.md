@@ -1,5 +1,11 @@
 # Prisma Cloud Compute Operator
 
+---
+
+**IMPORTANT: Please see [SUPPORT.md](SUPPORT.md) for the official support policy for the contents of this repository.**
+
+---
+
 This the Palo Alto Networks official repository for the [Ansible Operator](https://operatorhub.io/operator/pcc-operator) for the deployment and upgrade of a Prisma Cloud Compute Console and Defenders within a Kubernetes Cluster.
 
 Operator Souces:
